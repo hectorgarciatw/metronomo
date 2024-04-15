@@ -64,7 +64,7 @@
                             <div class="row">
                                 <div class="col-lg-6 mx-auto">
                                     <blockquote class="blockquote blockquote-custom bg-white p-5 shadow rounded">
-                                        <div class="blockquote-custom-icon bg-info shadow-sm"><i class="fa fa-quote-left text-white"></i></div>
+                                        <div class="blockquote-custom-icon bg-info shadow-sm"><i class="bx bxs-music bx-md"></i></div>
                                         <div class="p-5 mb-4 bg-body-tertiary rounded-3">
                                             <div class="controls container-fluid py-5">
                                                 <div class="bpm-container">
@@ -72,16 +72,38 @@
                                                     <div id="bpm" class="display-1 fw-bold bpmIndicator">120</div>
                                                     <label id="classification" class="form-label" for="customRange1">Allegro</label>
                                                 </div>
-                                                <input type="range" id="bpmSlider" class="form-range" min="1" max="240" value="120" />
-                                                <!-- <p class="col-md-8 fs-4">Using a series of utilities, you can create this jumbotron, just like the one in previous versions of Bootstrap. Check out the examples below for how you can remix and restyle it to your liking.</p>
-                        <-->
+                                                <div class="row align-items-center">
+                                                    <div class="col-auto">
+                                                        <!-- Botón para decrementar -->
+                                                        <button id="decrementButton" class="btn btn-outline btn-circle" type="button">
+                                                            <i class="bx bx-minus"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div class="col">
+                                                        <!-- Input range -->
+                                                        <input type="range" id="bpmSlider" class="form-range" min="1" max="240" value="120" />
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <!-- Botón para incrementar -->
+                                                        <button id="incrementButton" class="btn btn-outline btn-circle" type="button">
+                                                            <i class="bx bx-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
                                                 <audio id="tickSound" src="/assets/audios/classic.wav"></audio>
-                                                <button id="startStopButton" class="btn btn-primary btn-lg" type="button">
-                                                    <span class="bx bx-play-circle me-2"></span>
-                                                    Comenzar
-                                                </button>
 
-                                                <br />
+                                                <div style="margin-top: 30px" class="d-grid gap-2 col-12 mx-auto">
+                                                    <button id="startStopButton" class="btn btn-primary" type="button">
+                                                        <span class="bx bx-play-circle me-2 bx-sm"></span>
+                                                        Comenzar
+                                                    </button>
+                                                    <button id="tapTempoButton" class="btn btn-primary" type="button">
+                                                        <div class="btn-content">
+                                                            <span class="bx bx-play-circle me-2 bx-sm"></span>
+                                                            <span class="btn-text">Tap tempo</span>
+                                                        </div>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                         <!--<p class="mb-0 mt-2 font-italic">

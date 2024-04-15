@@ -5,6 +5,7 @@
 }
 
 .blockquote-custom-icon {
+    background-color: #ff3a27 !important;
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -13,7 +14,7 @@
     justify-content: center;
     position: absolute;
     top: -25px;
-    left: 50px;
+    right: 50px;
 }
 
 .masthead {
@@ -27,6 +28,25 @@
     left: 0; /* Alinea con el borde izquierdo del navbar */
     margin-left: 15px;
     width: 90px;
+}
+
+.btn-circle {
+    color: #ffffff;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    padding: 6px 0;
+    text-align: center;
+    font-size: 16px;
+    line-height: 1.428571429;
+    border: none;
+    background-color: #ff3a27 !important;
+}
+
+/* Estilo de la pelotita del input range */
+input[type="range"]::-webkit-slider-thumb {
+    background-color: #202529;
+    border-radius: 50%;
 }
 
 /* CONTENIDO INTERNO DEL JUMBOTRON */
@@ -48,9 +68,12 @@
 .bpm-pill {
     display: inline-block;
     padding: 0.5rem 1rem;
-    background-color: #007bff; /* Color de fondo */
+    background-color: #ff3a27; /* Color de fondo */
     color: #fff; /* Color del texto */
     border-radius: 999px; /* Hace que el borde sea completamente redondeado */
+}
+
+#bpm {
 }
 
 #startStopButton {
@@ -58,4 +81,18 @@
     align-items: center; /* Alineamos verticalmente los elementos del botón */
 }
 
+#incrementButton,
+#decrementButton {
+    border-color: #202529;
+}
+
+.controlButtons {
+    display: flex;
+    justify-content: space-around;
+}
+
+.btn {
+    text-align: center !important; /* Centra el texto horizontalmente */
+    display: inline-block !important; /* Mantiene el tamaño del botón */
+}
 /* FIN DEL CONTENIDO INTERNO DEL JUMBOTRON */

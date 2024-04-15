@@ -1,7 +1,11 @@
 const bpmDisplay = document.getElementById("bpm");
 const startStopButton = document.getElementById("startStopButton");
+const decrementButton = document.getElementById("decrementButton");
+const incrementButton = document.getElementById("incrementButton");
+
 const bpmSlider = document.getElementById("bpmSlider");
 const classification = document.getElementById("classification");
+const musicalNote = document.querySelector(".bx.bxs-music");
 
 let isPlaying = false;
 let tempo = parseInt(bpmSlider.value);
@@ -22,23 +26,35 @@ function startMetronome() {
     interval = setInterval(() => {
         tickSound.play();
     }, 60000 / tempo);
+    musicalNote.classList.add("bx-tada");
     startStopButton.innerHTML = `
-        <span class="bx bx-stop-circle me-2"></span>
-        Frenar
+        <span class="bx bx-stop-circle me-2 bx-sm"></span>
+        Detener
     `;
     isPlaying = true;
 }
 
 function stopMetronome() {
     clearInterval(interval);
+    musicalNote.classList.remove("bx-tada");
     startStopButton.innerHTML = startButtonContent;
     isPlaying = false;
 }
 
 startStopButton.addEventListener("click", startStop);
 
-bpmSlider.addEventListener("input", function () {
-    tempo = parseInt(this.value);
+decrementButton.addEventListener("click", () => {
+    tempo--;
+    bpmDisplay.textContent = tempo;
+});
+
+incrementButton.addEventListener("click", () => {
+    tempo++;
+    bpmDisplay.textContent = tempo;
+});
+
+bpmSlider.addEventListener("input", () => {
+    tempo = parseInt(bpmSlider.value);
     bpmDisplay.textContent = tempo;
 
     switch (true) {

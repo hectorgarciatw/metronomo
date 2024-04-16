@@ -28,8 +28,8 @@ function startMetronome() {
     }, 60000 / tempo);
     musicalNote.classList.add("bx-tada");
     startStopButton.innerHTML = `
-        <span class="bx bx-stop-circle me-2 bx-sm"></span>
-        Detener
+        <span class="bx bx-stop-circle me-2 bx-md bx-burst-hover"></span>
+
     `;
     isPlaying = true;
 }

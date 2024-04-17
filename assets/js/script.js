@@ -2,18 +2,19 @@ const bpmDisplay = document.getElementById("bpm");
 const startStopButton = document.getElementById("startStopButton");
 const decrementButton = document.getElementById("decrementButton");
 const incrementButton = document.getElementById("incrementButton");
-
 const bpmSlider = document.getElementById("bpmSlider");
 const classification = document.getElementById("classification");
 const musicalNote = document.querySelector(".bx.bxs-music");
+const startButtonContent = document.getElementById("startStopButton").innerHTML;
+
+//Audio embebido en el html
+const tickSound = document.getElementById("tickSound");
 
 let isPlaying = false;
 let tempo = parseInt(bpmSlider.value);
 let interval;
 
-const startButtonContent = document.getElementById("startStopButton").innerHTML;
-const tickSound = document.getElementById("tickSound");
-
+// Iniciar y detener el metrónomo
 function startStop() {
     if (isPlaying) {
         stopMetronome();
@@ -22,14 +23,14 @@ function startStop() {
     }
 }
 
+// Comienzo del trabajo del metronomo
 function startMetronome() {
-    interval = setInterval(() => {
-        tickSound.play();
-    }, 60000 / tempo);
+    const intervalMs = 60000 / tempo;
+    tick();
+    interval = setInterval(tick, intervalMs);
     musicalNote.classList.add("bx-tada");
     startStopButton.innerHTML = `
-        <span class="bx bx-stop-circle me-2 bx-md bx-burst-hover"></span>
-
+        <span class="bx bx-stop-circle me-2 bx-md bx-burst"></span>
     `;
     isPlaying = true;
 }
@@ -41,22 +42,48 @@ function stopMetronome() {
     isPlaying = false;
 }
 
-startStopButton.addEventListener("click", startStop);
+// Reproducir el sonido del tick
+function tick() {
+    // Reiniciar la reproducción al principio del audio
+    tickSound.currentTime = 0;
+    tickSound.play();
+}
 
-decrementButton.addEventListener("click", () => {
-    tempo--;
-    bpmDisplay.textContent = tempo;
-});
+function updateMetronome() {
+    if (isPlaying) {
+        stopMetronome();
+        startMetronome();
+    }
+}
 
-incrementButton.addEventListener("click", () => {
-    tempo++;
-    bpmDisplay.textContent = tempo;
-});
+// Incrementar el tempo dentro del intervalo permitido
+function decrementTempo() {
+    if (tempo > 1) {
+        tempo--;
+        updateMetronome();
+        updateTempoDisplay();
+    }
+}
 
-bpmSlider.addEventListener("input", () => {
+// Decrementa el tempo dentro del intervalo permitido
+function incrementTempo() {
+    if (tempo < 240) {
+        tempo++;
+        updateMetronome();
+        updateTempoDisplay();
+    }
+}
+
+// Manejar el cambio en el tempo
+function handleBpmChange() {
     tempo = parseInt(bpmSlider.value);
-    bpmDisplay.textContent = tempo;
+    updateMetronome();
+    updateTempoDisplay();
+}
 
+// Actualizar la pantalla con el tempo actual y su clasificación
+function updateTempoDisplay() {
+    bpmDisplay.textContent = tempo;
     switch (true) {
         case tempo <= 20:
             return (classification.textContent = "Larghissimo");
@@ -85,9 +112,14 @@ bpmSlider.addEventListener("input", () => {
         case tempo <= 240:
             return (classification.textContent = "Prestissimo");
     }
+}
 
-    if (isPlaying) {
-        stopMetronome();
-        startMetronome();
-    }
-});
+// Inicializar el metrónomo
+function init() {
+    startStopButton.addEventListener("click", startStop);
+    decrementButton.addEventListener("click", decrementTempo);
+    incrementButton.addEventListener("click", incrementTempo);
+    bpmSlider.addEventListener("input", handleBpmChange);
+}
+
+init();

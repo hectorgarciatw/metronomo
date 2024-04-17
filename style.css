@@ -5,7 +5,7 @@
 }
 
 .blockquote-custom-icon {
-    background-color: #ff3a27 !important;
+    background-color: #ffdf31 !important;
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -49,9 +49,11 @@ input[type="range"]::-webkit-slider-thumb {
     border-radius: 50%;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 767px) {
     #bpmSlider {
-        width: 100%;
+        width: 139px !important;
+        margin-left: -20px; /* Ajusta el margen izquierdo del input range para acercarlo a los botones */
+        margin-right: -20px; /* Ajusta el margen derecho del input range para acercarlo a los botones */
     }
 }
 
@@ -74,12 +76,17 @@ input[type="range"]::-webkit-slider-thumb {
 .bpm-pill {
     display: inline-block;
     padding: 0.5rem 1rem;
-    background-color: #ff3a27; /* Color de fondo */
-    color: #fff; /* Color del texto */
-    border-radius: 999px; /* Hace que el borde sea completamente redondeado */
+    background-color: #ff3a27;
+    color: #fff;
+    border-radius: 999px;
+    margin-top: -10px;
+    margin-bottom: -30px;
 }
 
-#bpm {
+#classification {
+    margin-top: -20px;
+    margin-bottom: -2px;
+    font-size: 20px;
 }
 
 #startStopButton {

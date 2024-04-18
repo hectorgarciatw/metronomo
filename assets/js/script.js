@@ -1,18 +1,32 @@
-const bpmDisplay = document.getElementById("bpm");
-const startStopButton = document.getElementById("startStopButton");
-const decrementButton = document.getElementById("decrementButton");
-const incrementButton = document.getElementById("incrementButton");
-const bpmSlider = document.getElementById("bpmSlider");
-const classification = document.getElementById("classification");
-const musicalNote = document.querySelector(".bx.bxs-music");
-const startButtonContent = document.getElementById("startStopButton").innerHTML;
+const bpmDisplay = document.getElementById('bpm');
+const startStopButton = document.getElementById('startStopButton');
+const decrementButton = document.getElementById('decrementButton');
+const incrementButton = document.getElementById('incrementButton');
+const bpmSlider = document.getElementById('bpmSlider');
+const classification = document.getElementById('classification');
+const musicalNote = document.querySelector('.bx.bxs-music');
+const startButtonContent = document.getElementById('startStopButton').innerHTML;
+
+var beatCircles = document.querySelectorAll('.beat-circle');
 
 //Audio embebido en el html
-const tickSound = document.getElementById("tickSound");
+const tickSound = document.getElementById('tickSound');
 
 let isPlaying = false;
 let tempo = parseInt(bpmSlider.value);
 let interval;
+let beat = 0;
+
+// Pinto el beat que esta sonando actualmente
+function paintBeat(circleNumber) {
+    beatCircles.forEach((beatCircle, index) => {
+        if (index === circleNumber) {
+            beatCircle.style.backgroundColor = '#ff3a27';
+        } else {
+            beatCircle.style.backgroundColor = '#8d8c8c';
+        }
+    });
+}
 
 // Iniciar y detener el metrónomo
 function startStop() {
@@ -28,7 +42,7 @@ function startMetronome() {
     const intervalMs = 60000 / tempo;
     tick();
     interval = setInterval(tick, intervalMs);
-    musicalNote.classList.add("bx-tada");
+    musicalNote.classList.add('bx-tada');
     startStopButton.innerHTML = `
         <span class="bx bx-stop-circle me-2 bx-md bx-burst"></span>
     `;
@@ -37,7 +51,7 @@ function startMetronome() {
 
 function stopMetronome() {
     clearInterval(interval);
-    musicalNote.classList.remove("bx-tada");
+    musicalNote.classList.remove('bx-tada');
     startStopButton.innerHTML = startButtonContent;
     isPlaying = false;
 }
@@ -46,7 +60,9 @@ function stopMetronome() {
 function tick() {
     // Reiniciar la reproducción al principio del audio
     tickSound.currentTime = 0;
+    beat++;
     tickSound.play();
+    paintBeat(beat % 4);
 }
 
 function updateMetronome() {
@@ -86,40 +102,40 @@ function updateTempoDisplay() {
     bpmDisplay.textContent = tempo;
     switch (true) {
         case tempo <= 20:
-            return (classification.textContent = "Larghissimo");
+            return (classification.textContent = 'Larghissimo');
         case tempo <= 40:
-            return (classification.textContent = "Grave");
+            return (classification.textContent = 'Grave');
         case tempo <= 45:
-            return (classification.textContent = "Lento");
+            return (classification.textContent = 'Lento');
         case tempo <= 50:
-            return (classification.textContent = "Largo");
+            return (classification.textContent = 'Largo');
         case tempo <= 60:
-            return (classification.textContent = "Adagio");
+            return (classification.textContent = 'Adagio');
         case tempo <= 70:
-            return (classification.textContent = "Adagietto");
+            return (classification.textContent = 'Adagietto');
         case tempo <= 85:
-            return (classification.textContent = "Andante");
+            return (classification.textContent = 'Andante');
         case tempo <= 97:
-            return (classification.textContent = "Moderato");
+            return (classification.textContent = 'Moderato');
         case tempo <= 109:
-            return (classification.textContent = "Allegretto");
+            return (classification.textContent = 'Allegretto');
         case tempo <= 132:
-            return (classification.textContent = "Allegro");
+            return (classification.textContent = 'Allegro');
         case tempo <= 140:
-            return (classification.textContent = "Vivace");
+            return (classification.textContent = 'Vivace');
         case tempo <= 177:
-            return (classification.textContent = "Presto");
+            return (classification.textContent = 'Presto');
         case tempo <= 240:
-            return (classification.textContent = "Prestissimo");
+            return (classification.textContent = 'Prestissimo');
     }
 }
 
 // Inicializar el metrónomo
 function init() {
-    startStopButton.addEventListener("click", startStop);
-    decrementButton.addEventListener("click", decrementTempo);
-    incrementButton.addEventListener("click", incrementTempo);
-    bpmSlider.addEventListener("input", handleBpmChange);
+    startStopButton.addEventListener('click', startStop);
+    decrementButton.addEventListener('click', decrementTempo);
+    incrementButton.addEventListener('click', incrementTempo);
+    bpmSlider.addEventListener('input', handleBpmChange);
 }
 
 init();

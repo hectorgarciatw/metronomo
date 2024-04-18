@@ -1,3 +1,8 @@
+body {
+    background-image: url('/assets/images/fondo.jpg');
+    background-repeat: repeat;
+}
+
 .blockquote-custom {
     position: relative;
     font-size: 1.1rem;
@@ -15,11 +20,6 @@
     position: absolute;
     top: -25px;
     right: 50px;
-}
-
-.masthead {
-    background-image: url("/assets/images/fondo.jpg");
-    background-repeat: repeat;
 }
 
 .navbar-brand img {
@@ -43,8 +43,44 @@
     background-color: #ff3a27 !important;
 }
 
+/* Circulos de los beats*/
+.beats {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0 20px;
+}
+
+.beat-circle {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transition: 0.2s linear;
+    border-radius: 50%;
+    background: #8d8c8c;
+    margin: 0 5px;
+}
+
+.beat-circle:hover {
+    background: #ff3a27;
+}
+
+.beatPill {
+    display: inline-block;
+    padding: 1px 4px; /* Ajusta el relleno según sea necesario */
+    border-radius: 6px; /* Ajusta el radio de borde según sea necesario */
+    background-color: #ffdf31;
+    color: #202529;
+    font-size: 0.6em; /* Ajusta el tamaño del texto según sea necesario */
+    opacity: 0.9; /* Opacidad del texto para que sea sutil */
+    margin-left: 5px; /* Espacio entre el último beat-circle y el texto */
+    max-height: 20px; /* Altura máxima de la píldora */
+    line-height: 17px; /* Centrar verticalmente el texto */
+}
+
+/* Fin circulos de los beats*/
+
 /* Estilo de la pelotita del input range */
-input[type="range"]::-webkit-slider-thumb {
+input[type='range']::-webkit-slider-thumb {
     background-color: #202529;
     border-radius: 50%;
 }
@@ -52,8 +88,7 @@ input[type="range"]::-webkit-slider-thumb {
 @media (max-width: 767px) {
     #bpmSlider {
         width: 139px !important;
-        margin-left: -20px; /* Ajusta el margen izquierdo del input range para acercarlo a los botones */
-        margin-right: -20px; /* Ajusta el margen derecho del input range para acercarlo a los botones */
+        margin: 0 -20px;
     }
 }
 
@@ -79,13 +114,11 @@ input[type="range"]::-webkit-slider-thumb {
     background-color: #ff3a27;
     color: #fff;
     border-radius: 999px;
-    margin-top: -10px;
-    margin-bottom: -30px;
+    margin: -10px 0 -30px;
 }
 
 #classification {
-    margin-top: -20px;
-    margin-bottom: -2px;
+    margin: -20px 0 -2px;
     font-size: 20px;
 }
 

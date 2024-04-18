@@ -138,4 +138,39 @@ function init() {
     bpmSlider.addEventListener('input', handleBpmChange);
 }
 
+// TAP TEMPO ---- Variable para almacenar los tiempos de los clics
+let tapTimes = [];
+const tapTempoButton = document.getElementById('tapTempoButton');
+
+// Función para manejar los clics en el botón de tap tempo
+function handleTapTempo() {
+    const now = Date.now();
+
+    // Añadir el tiempo del clic a la lista
+    tapTimes.push(now);
+
+    // Limitar la lista de tiempos a los últimos 4 clics para mantenerla fresca
+    if (tapTimes.length > 4) {
+        tapTimes.shift();
+    }
+
+    // Calcular el tempo basado en los tiempos de los últimos clics
+    let sum = 0;
+    for (let i = 1; i < tapTimes.length; i++) {
+        sum += tapTimes[i] - tapTimes[i - 1];
+    }
+    const averageInterval = sum / (tapTimes.length - 1);
+    const tempo = Math.round(60000 / averageInterval);
+
+    console.log(`New tempo: ${tempo}`);
+    //updateTempo(tempo)
+    updateMetronome();
+    updateTempoDisplay();
+}
+
+// Inicializar el botón de tap tempo
+tapTempoButton.addEventListener('click', handleTapTempo);
+
+// FIN TAP TEMPO
+
 init();

@@ -144,8 +144,8 @@ input[type='range']::-webkit-slider-thumb {
     }
 
     .btn-circle {
-        width: 18px; /* Ancho más pequeño para los botones */
-        height: 18px; /* Altura más pequeña para los botones */
+        width: 28px; /* Ancho más pequeño para los botones */
+        height: 28px; /* Altura más pequeña para los botones */
         font-size: 8px; /* Tamaño de fuente más pequeño para los iconos */
         padding: 0; /* Eliminar el relleno para reducir el espacio */
     }
@@ -208,10 +208,35 @@ input[type='range']::-webkit-slider-thumb {
 }
 /* FIN DEL CONTENIDO INTERNO DEL JUMBOTRON */
 
-/*
-*
-* ==========================================
-* CUSTOM UTIL CLASSES
-* ==========================================
-*
-*/
+/* Zona del beat selector*/
+.beatSelector {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between; /* Alinear los elementos al inicio y al final del contenedor */
+    align-items: center; /* Centrar verticalmente los elementos */
+}
+.beatSelector div:first-child {
+    margin-right: auto; /* Hacer que el primer div (Latidos) se alinee a la izquierda */
+}
+.beatSelector button {
+    margin-left: 10px; /* Añadir un pequeño margen entre los botones y los números */
+    margin-right: 10px; /* Añadir un pequeño margen entre los botones y los números */
+}
+
+.btn-beatSelector {
+    color: #ffffff;
+    border-radius: 50%;
+    width: 21px;
+    height: 21px;
+    padding: 3px 0;
+    text-align: center;
+    font-size: 10px;
+    line-height: 1.428571429;
+    border: none;
+    background-color: #8d8c8c !important;
+}
+
+.btn-beatSelector:hover {
+    color: #ffffff;
+}
+/* Finde del beat selector*/

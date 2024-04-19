@@ -2,6 +2,9 @@ const bpmDisplay = document.getElementById('bpm');
 const startStopButton = document.getElementById('startStopButton');
 const decrementButton = document.getElementById('decrementButton');
 const incrementButton = document.getElementById('incrementButton');
+const incrementBeatCount = document.getElementById('incrementBeatCount');
+const decrementBeatCount = document.getElementById('decrementBeatCount');
+const beatsDisplay = document.getElementById('beatsDisplay');
 const bpmSlider = document.getElementById('bpmSlider');
 const classification = document.getElementById('classification');
 const musicalNote = document.querySelector('.bx.bxs-music');
@@ -130,11 +133,30 @@ function updateTempoDisplay() {
     }
 }
 
+function incrementBeatDisplay() {
+    let beats = parseInt(beatsDisplay.textContent);
+    if (beats < 8) {
+        beats++;
+        beatsDisplay.textContent = beats;
+    }
+}
+
+function decrementBeatDisplay() {
+    let beats = parseInt(beatsDisplay.textContent);
+    if (beats > 1) {
+        beats--;
+        beatsDisplay.textContent = beats;
+    }
+}
+
 // Inicializar el metrónomo
 function init() {
     startStopButton.addEventListener('click', startStop);
     decrementButton.addEventListener('click', decrementTempo);
     incrementButton.addEventListener('click', incrementTempo);
+    incrementBeatCount.addEventListener('click', incrementBeatDisplay);
+    decrementBeatCount.addEventListener('click', decrementBeatDisplay);
+
     bpmSlider.addEventListener('input', handleBpmChange);
 }
 

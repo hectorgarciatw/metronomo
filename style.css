@@ -22,6 +22,30 @@ body {
     right: 50px;
 }
 
+.blockquote-button {
+    background-color: #ff3a27 !important;
+    color: #ffffff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+}
+
+.blockquote-playStop {
+    top: 23%;
+    right: -20px;
+    transform: translateY(-50%);
+}
+
+.blockquote-tapTempo {
+    top: 38%;
+    right: -20px;
+    transform: translateY(-50%);
+}
+
 .navbar-brand img {
     position: absolute;
     top: 0;
@@ -60,6 +84,30 @@ body {
     margin: 0 5px;
 }
 
+@media (max-width: 768px) {
+    .beats1 {
+        margin: 2px 0 1px;
+    }
+
+    .beat-circle {
+        width: 20px;
+        height: 20px;
+        margin: 0 1px;
+    }
+}
+
+@media (max-width: 344px) {
+    .beats1 {
+        margin: 1px 0 1px;
+    }
+
+    .beat-circle {
+        width: 10px;
+        height: 10px;
+        margin: 10px 1px;
+    }
+}
+
 .beat-circle:hover {
     background: #ff3a27;
 }
@@ -86,9 +134,26 @@ input[type='range']::-webkit-slider-thumb {
 }
 
 @media (max-width: 767px) {
-    #bpmSlider {
-        width: 139px !important;
-        margin: 0 -20px;
+    .range-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        width: 70%;
+        margin: 0 auto;
+    }
+
+    .btn-circle {
+        width: 18px; /* Ancho más pequeño para los botones */
+        height: 18px; /* Altura más pequeña para los botones */
+        font-size: 8px; /* Tamaño de fuente más pequeño para los iconos */
+        padding: 0; /* Eliminar el relleno para reducir el espacio */
+    }
+}
+
+@media (max-width: 767px) {
+    .col-auto {
+        margin: 5px; /* Ajustar el margen para evitar el amontonamiento de elementos */
     }
 }
 
@@ -118,7 +183,7 @@ input[type='range']::-webkit-slider-thumb {
 }
 
 #classification {
-    margin: -20px 0 -2px;
+    margin: -25px 0 -2px;
     font-size: 20px;
 }
 
@@ -142,3 +207,11 @@ input[type='range']::-webkit-slider-thumb {
     display: inline-block !important; /* Mantiene el tamaño del botón */
 }
 /* FIN DEL CONTENIDO INTERNO DEL JUMBOTRON */
+
+/*
+*
+* ==========================================
+* CUSTOM UTIL CLASSES
+* ==========================================
+*
+*/

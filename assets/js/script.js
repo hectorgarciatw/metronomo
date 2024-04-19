@@ -44,7 +44,7 @@ function startMetronome() {
     interval = setInterval(tick, intervalMs);
     musicalNote.classList.add('bx-tada');
     startStopButton.innerHTML = `
-        <span class="bx bx-stop-circle me-2 bx-md bx-burst"></span>
+    <i class="bx bx-stop-circle bx-md"></i>
     `;
     isPlaying = true;
 }

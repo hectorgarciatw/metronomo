@@ -208,7 +208,7 @@ input[type='range']::-webkit-slider-thumb {
 }
 /* FIN DEL CONTENIDO INTERNO DEL JUMBOTRON */
 
-/* Zona del beat selector*/
+/* ZONA BEAT SELECTOR*/
 .beatSelector {
     margin-top: 15px;
     display: flex;
@@ -239,4 +239,24 @@ input[type='range']::-webkit-slider-thumb {
 .btn-beatSelector:hover {
     color: #ffffff;
 }
-/* Finde del beat selector*/
+
+@media screen and (max-width: 768px) {
+    .btn-beatSelector {
+        width: 25px; /* Ancho aumentado para dispositivos móviles */
+        height: 25px; /* Altura aumentada para dispositivos móviles */
+        font-size: 0.5rem; /* Tamaño de fuente aumentado para dispositivos móviles */
+    }
+}
+/* FIN BEAT SELECTOR*/
+
+/* LOGO*/
+@media (max-width: 991.98px) {
+    .navbar-brand {
+        position: absolute;
+        left: 35%;
+        top: 15%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* FIN LOGO */

@@ -9,8 +9,7 @@ const bpmSlider = document.getElementById('bpmSlider');
 const classification = document.getElementById('classification');
 const musicalNote = document.querySelector('.bx.bxs-music');
 const startButtonContent = document.getElementById('startStopButton').innerHTML;
-
-var beatCircles = document.querySelectorAll('.beat-circle');
+const beatsCircle = document.getElementById('beatsCircle');
 
 //Audio embebido en el html
 const tickSound = document.getElementById('tickSound');
@@ -18,10 +17,16 @@ const tickSound = document.getElementById('tickSound');
 let isPlaying = false;
 let tempo = parseInt(bpmSlider.value);
 let interval;
+// Representa el beat que está sonando
 let beat = 0;
+// Representa la cantidad de beats en pantalla
+let beatSize = 4;
+//Representa la cantidad de elementos representantes de los beats
+let beatCircles;
 
 // Pinto el beat que esta sonando actualmente
 function paintBeat(circleNumber) {
+    beatCircles = document.querySelectorAll('.beat-circle');
     beatCircles.forEach((beatCircle, index) => {
         if (index === circleNumber) {
             beatCircle.style.backgroundColor = '#ff3a27';
@@ -63,9 +68,9 @@ function stopMetronome() {
 function tick() {
     // Reiniciar la reproducción al principio del audio
     tickSound.currentTime = 0;
-    beat++;
     tickSound.play();
-    paintBeat(beat % 4);
+    paintBeat(beat % beatSize);
+    beat++;
 }
 
 function updateMetronome() {
@@ -133,18 +138,37 @@ function updateTempoDisplay() {
     }
 }
 
+// Agrega un nuevo indicador de pulso en pantalla
 function incrementBeatDisplay() {
     let beats = parseInt(beatsDisplay.textContent);
     if (beats < 8) {
         beats++;
+        beatSize++;
+        let newBeatCircle = document.createElement('div');
+        newBeatCircle.className = 'beat-circle';
+        beatsCircles.insertBefore(newBeatCircle, beatsCircles.firstChild);
         beatsDisplay.textContent = beats;
     }
 }
 
+// Elimino un indicar de pulso de pantalla
 function decrementBeatDisplay() {
     let beats = parseInt(beatsDisplay.textContent);
     if (beats > 1) {
         beats--;
+        beatSize--;
+        // Obtener todos los elementos 'beat-circle' dentro de beatsCircles
+        let beatCircles = document.querySelectorAll('#beatsCircles .beat-circle');
+        // Verificar que haya al menos un beat-circle que no sea beatPill
+        if (beatCircles.length > 1) {
+            // Eliminar el último beat-circle que no sea beatPill
+            for (let i = beatCircles.length - 1; i >= 0; i--) {
+                if (!beatCircles[i].classList.contains('beatPill')) {
+                    beatsCircles.removeChild(beatCircles[i]);
+                    break;
+                }
+            }
+        }
         beatsDisplay.textContent = beats;
     }
 }

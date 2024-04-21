@@ -10,9 +10,13 @@ const classification = document.getElementById('classification');
 const musicalNote = document.querySelector('.bx.bxs-music');
 const startButtonContent = document.getElementById('startStopButton').innerHTML;
 const beatsCircle = document.getElementById('beatsCircle');
+const audioOptions = document.getElementById('audioOptions');
 
 //Audio embebido en el html
-const tickSound = document.getElementById('tickSound');
+let tickSound = document.getElementById('tickSound1');
+let tickSound2 = document.getElementById('tickSound2');
+let tickSound3 = document.getElementById('tickSound3');
+let tickSound4 = document.getElementById('tickSound4');
 
 let isPlaying = false;
 let tempo = parseInt(bpmSlider.value);
@@ -173,6 +177,26 @@ function decrementBeatDisplay() {
     }
 }
 
+function changeAudioOptions() {
+    let selectedValue = this.value;
+    switch (selectedValue) {
+        case '1':
+            console.log('Se seleccionó Clásico');
+            break;
+        case '2':
+            tickSound = tickSound2;
+            break;
+        case '3':
+            tickSound = tickSound3;
+            break;
+        case '4':
+            tickSound = tickSound4;
+            break;
+        default:
+            console.log('Opción no reconocida');
+    }
+}
+
 // Inicializar el metrónomo
 function init() {
     startStopButton.addEventListener('click', startStop);
@@ -180,7 +204,7 @@ function init() {
     incrementButton.addEventListener('click', incrementTempo);
     incrementBeatCount.addEventListener('click', incrementBeatDisplay);
     decrementBeatCount.addEventListener('click', decrementBeatDisplay);
-
+    audioOptions.addEventListener('change', changeAudioOptions);
     bpmSlider.addEventListener('input', handleBpmChange);
 }
 

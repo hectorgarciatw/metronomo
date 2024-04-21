@@ -260,3 +260,9 @@ input[type='range']::-webkit-slider-thumb {
 }
 
 /* FIN LOGO */
+
+/* OPCIONES */
+.options {
+    margin-top: 10px;
+}
+/* FIN OPCIONES */

@@ -46,6 +46,12 @@ body {
     transform: translateY(-50%);
 }
 
+.blockquote-volume {
+    top: 53%;
+    right: -20px;
+    transform: translateY(-50%);
+}
+
 .navbar-brand img {
     position: absolute;
     top: 0;
@@ -266,3 +272,34 @@ input[type='range']::-webkit-slider-thumb {
     margin-top: 10px;
 }
 /* FIN OPCIONES */
+
+/* SLIDER DE VOLUMEN */
+
+/* Cambiar el color de fondo del input range a negro */
+
+.volume-slider {
+    display: none;
+    position: absolute;
+    bottom: 35%;
+    right: -10px;
+    transform: translateX(50%); /* Corrige el desplazamiento a la izquierda */
+    transform: rotate(-90deg); /* Rota el slider verticalmente */
+    transform-origin: bottom right; /* Establece el origen de la rotación */
+    width: 100px; /* Ancho del slider */
+}
+
+.volume-slider.active {
+    display: block;
+}
+
+/* Cambiar el color de la pelotita del slider a negro */
+.volume-slider input[type='range']::-webkit-slider-thumb {
+    background-color: black !important;
+}
+
+/* Cambiar el color de la pista deslizante del slider a rojo */
+.volume-slider input[type='range']::-webkit-slider-runnable-track {
+    background-color: red;
+}
+
+/* FIN SLIDER DE VOLUMEN */

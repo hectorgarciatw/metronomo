@@ -181,7 +181,7 @@ function changeAudioOptions() {
     let selectedValue = this.value;
     switch (selectedValue) {
         case '1':
-            console.log('Se seleccionó Clásico');
+            tickSound = tickSound1;
             break;
         case '2':
             tickSound = tickSound2;

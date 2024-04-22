@@ -61,6 +61,14 @@
                                         <div class="blockquote-custom-icon bg-info shadow-md"><i class="bx bxs-music bx-md"></i></div>
                                         <div id="startStopButton" class="blockquote-button blockquote-playStop bg-info shadow-md"><i class="bx bx-play-circle bx-md"></i></div>
                                         <div id="tapTempoButton" class="blockquote-button blockquote-tapTempo bg-info shadow-md"><i class="bx bx-shape-circle bx-md"></i></div>
+                                        <div class="volume-control">
+                                            <div id="volumeButton" class="blockquote-button blockquote-volume bg-info shadow-md">
+                                                <i class="bx bx-volume-full bx-md"></i>
+                                            </div>
+                                            <div id="volumeSlider" class="volume-slider">
+                                                <input type="range" id="volumeRange" min="0" max="10" value="5" step="1" />
+                                            </div>
+                                        </div>
                                         <div class="controls container-fluid py-5">
                                             <div class="bpm-container">
                                                 <div class="bpm-pill">BPM</div>
@@ -83,7 +91,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="col">
-                                                    <!-- Input range -->
+                                                    <!-- BPM slider -->
                                                     <input type="range" id="bpmSlider" class="form-range" min="1" max="240" value="120" />
                                                 </div>
                                                 <div class="col-auto">
@@ -109,16 +117,16 @@
                                                 <select id="audioOptions" class="form-select" aria-label="Default select example">
                                                     <option selected>Tipo de audio del click</option>
                                                     <option value="1">Clásico</option>
-                                                    <option value="2">Campana</option>
-                                                    <option value="3">Liviano</option>
-                                                    <option value="3">Pulso</option>
+                                                    <option value="2">Grave</option>
+                                                    <option value="3">Natural</option>
+                                                    <option value="4">Cencerro</option>
                                                 </select>
                                             </div>
 
-                                            <audio id="tickSound1" src="/assets/audios/classic.wav"></audio>
-                                            <audio id="tickSound2" src="/assets/audios/bell.wav"></audio>
-                                            <audio id="tickSound3" src="/assets/audios/light.wav"></audio>
-                                            <audio id="tickSound4" src="/assets/audios/pulse.flac"></audio>
+                                            <audio id="tickSound1" src="/assets/audios/classic.mp3"></audio>
+                                            <audio id="tickSound2" src="/assets/audios/loud.mp3"></audio>
+                                            <audio id="tickSound3" src="/assets/audios/naturalLow.mp3"></audio>
+                                            <audio id="tickSound4" src="/assets/audios/can.mp3"></audio>
                                         </div>
                                     </blockquote>
                                 </div>
@@ -133,6 +141,13 @@
         <script src="/assets/js/script.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', () => {
+                const volumeButton = document.getElementById('volumeButton');
+                const volumeSlider = document.getElementById('volumeSlider');
+
+                volumeButton.addEventListener('click', function () {
+                    volumeSlider.classList.toggle('active');
+                });
+
                 // Obtener el elemento del dropdown
                 const dropdown = document.querySelector('.dropdown');
 

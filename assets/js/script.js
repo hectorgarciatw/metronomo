@@ -27,6 +27,45 @@ let beat = 0;
 let beatSize = 4;
 //Representa la cantidad de elementos representantes de los beats
 let beatCircles;
+//Para alojar el id del intervalo asociado al cronómetro/temporizador
+let intervalID;
+
+timeInput.addEventListener('input', function () {
+    let value = this.value;
+    // Elimina cualquier carácter que no sea un número o ":"
+    value = value.replace(/[^0-9:]/g, '');
+    // Divide el valor en minutos y segundos
+    let parts = value.split(':');
+    let minutes = parseInt(parts[0]) || 0;
+    let seconds = parseInt(parts[1]) || 0;
+    // Asegúrate de que los minutos estén en el rango de 0 a 59
+    minutes = Math.min(Math.max(0, minutes), 59);
+    // Asegúrate de que los segundos estén en el rango de 0 a 59
+    seconds = Math.min(Math.max(0, seconds), 59);
+    // Formatea los minutos y segundos para que tengan siempre dos dígitos
+    let formattedMinutes = String(minutes).padStart(2, '0');
+    let formattedSeconds = String(seconds).padStart(2, '0');
+    // Actualiza el valor del input con el nuevo formato "mm:ss"
+    this.value = formattedMinutes + ':' + formattedSeconds;
+});
+
+// Agrega eventos de clic para permitir la edición directa de minutos y segundos
+timeInput.addEventListener('click', function (event) {
+    const selection = window.getSelection().toString();
+    if (selection === '') {
+        // Determina si el clic se realizó en la parte de minutos o segundos
+        const cursorPos = this.selectionStart;
+        const isMinutes = cursorPos <= 1; // Primeros dos caracteres son minutos
+        const isSeconds = cursorPos > 2; // Después del segundo carácter son segundos
+
+        // Si es minutos o segundos, selecciona el valor para permitir la edición directa
+        if (isMinutes) {
+            this.setSelectionRange(0, 2); // Selecciona los minutos
+        } else if (isSeconds) {
+            this.setSelectionRange(3, 5); // Selecciona los segundos
+        }
+    }
+});
 
 // Pinto el beat que esta sonando actualmente
 function paintBeat(circleNumber) {
@@ -43,8 +82,10 @@ function paintBeat(circleNumber) {
 // Iniciar y detener el metrónomo
 function startStop() {
     if (isPlaying) {
+        stopwatchCheck.disabled = false;
         stopMetronome();
     } else {
+        stopwatchCheck.disabled = true;
         startMetronome();
     }
 }
@@ -59,6 +100,30 @@ function startMetronome() {
     <i class="bx bx-stop-circle bx-md"></i>
     `;
     isPlaying = true;
+
+    if (stopwatchCheck.checked) {
+        // Si el checkbox está marcado, comenzar el cronómetro
+        const startTime = timeInput.value.split(':');
+        let minutos = parseInt(startTime[0]);
+        let segundos = parseInt(startTime[1]);
+
+        intervalID = setInterval(() => {
+            if (segundos === 0) {
+                if (minutos === 0) {
+                    stopMetronome();
+                    return;
+                } else {
+                    minutos--;
+                    segundos = 59;
+                }
+            } else {
+                segundos--;
+            }
+
+            // Actualizar el valor del input con el nuevo tiempo
+            timeInput.value = minutos.toString().padStart(2, '0') + ':' + segundos.toString().padStart(2, '0');
+        }, 1000);
+    }
 }
 
 function stopMetronome() {
@@ -66,6 +131,9 @@ function stopMetronome() {
     musicalNote.classList.remove('bx-tada');
     startStopButton.innerHTML = startButtonContent;
     isPlaying = false;
+    clearInterval(intervalID);
+    stopwatchCheck.checked = false;
+    stopwatchCheck.disabled = false;
 }
 
 // Reproducir el sonido del tick

@@ -1,5 +1,5 @@
 body {
-    background-image: url("/assets/images/fondo.jpg");
+    background-image: url('/assets/images/fondo.jpg');
     background-repeat: repeat;
 }
 
@@ -134,7 +134,7 @@ body {
 /* Fin circulos de los beats*/
 
 /* Estilo de la pelotita del input range */
-input[type="range"]::-webkit-slider-thumb {
+input[type='range']::-webkit-slider-thumb {
     background-color: #202529;
     border-radius: 50%;
 }
@@ -293,12 +293,12 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 /* Cambiar el color de la pelotita del slider a negro */
-.volume-slider input[type="range"]::-webkit-slider-thumb {
+.volume-slider input[type='range']::-webkit-slider-thumb {
     background-color: black !important;
 }
 
 /* Cambiar el color de la pista deslizante del slider a rojo */
-.volume-slider input[type="range"]::-webkit-slider-runnable-track {
+.volume-slider input[type='range']::-webkit-slider-runnable-track {
     background-color: red;
 }
 
@@ -322,3 +322,72 @@ input[type="range"]::-webkit-slider-thumb {
     right: 10px;
     top: 25px;
 }
+
+/* FIN TOOGLE*/
+
+/* MODO OSCURO*/
+/* Estilos para la versión oscura */
+.dark-mode {
+    background-color: #222; /* Cambia el color de fondo a negro */
+    color: #fff; /* Cambia el color del texto a blanco */
+}
+
+.dark-mode .navbar {
+    background-color: #000000 !important; /* Cambia el color de fondo de la barra de navegación */
+}
+
+.dark-mode .blockquote-custom {
+    background-color: #444; /* Cambia el color de fondo de los bloques de citas */
+}
+
+.dark-mode .bg-white {
+    background-color: #202529 !important;
+}
+
+.dark-mode .bpm-container,
+.dark-mode .beats {
+    color: #fff; /* Cambia el color del texto de los controles de ritmo */
+}
+
+.dark-mode .bpm-pill {
+    background-color: #555; /* Cambia el color de fondo de la píldora BPM */
+}
+
+.dark-mode .beatPill {
+    background-color: #ffffff; /* Cambia el color de fondo de la píldora de latidos */
+}
+
+.dark-mode .nav-link {
+    color: #ffffff;
+}
+
+.dark-mode .navbar-toggler .navbar-toggler-icon {
+    color: #ffffff !important;
+}
+
+.dark-mode input[type='range']::-webkit-slider-thumb {
+    background-color: #ff3a27; /* Cambia el color a tu preferencia */
+}
+
+.dark-mode #decrementBeatCount,
+#incrementBeatCount {
+    color: #ffffff; /* Cambia el color del texto del botón */
+    background-color: #e65531 !important; /* Cambia el color de fondo del botón */
+    border-color: #ffffff; /* Cambia el color del borde del botón */
+}
+
+/* Ocultar el icono de luna por defecto */
+.modo-oscuro-icon {
+    display: none;
+}
+
+/* Mostrar el icono de luna cuando el modo oscuro está activado */
+.modo-oscuro .modo-claro-icon {
+    display: none;
+}
+
+.modo-oscuro .modo-oscuro-icon {
+    display: inline-block;
+}
+
+/* FIN MODO OSCURO*/

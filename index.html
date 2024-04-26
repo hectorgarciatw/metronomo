@@ -59,10 +59,10 @@
                                 <div class="col-lg-6 mx-auto">
                                     <blockquote class="blockquote blockquote-custom bg-white p-5 shadow rounded">
                                         <div class="blockquote-custom-icon bg-info shadow-md"><i class="bx bxs-music bx-md"></i></div>
-                                        <div id="startStopButton" class="blockquote-button blockquote-playStop bg-info shadow-md"><i class="bx bx-play-circle bx-md"></i></div>
-                                        <div id="tapTempoButton" class="blockquote-button blockquote-tapTempo bg-info shadow-md"><i class="bx bx-shape-circle bx-md"></i></div>
+                                        <div id="startStopButton" data-toggle="tooltip" data-bs-placement="left" title="Reproducir/Frenar" class="blockquote-button blockquote-playStop bg-info shadow-md"><i class="bx bx-play-circle bx-md"></i></div>
+                                        <div id="tapTempoButton" data-toggle="tooltip" data-placement="top" title="Tap Tempo" class="blockquote-button blockquote-tapTempo bg-info shadow-md"><i class="bx bx-shape-circle bx-md"></i></div>
                                         <div class="volume-control">
-                                            <div id="volumeButton" class="blockquote-button blockquote-volume bg-info shadow-md">
+                                            <div id="volumeButton" data-toggle="tooltip" data-placement="top" title="Control de volumen" class="blockquote-button blockquote-volume bg-info shadow-md">
                                                 <i class="bx bx-volume-full bx-md"></i>
                                             </div>
                                             <div id="volumeSlider" class="volume-slider">
@@ -81,7 +81,7 @@
                                                 <div class="beat-circle"></div>
                                                 <div class="beat-circle"></div>
                                                 <div class="beat-circle"></div>
-                                                <div class="beatPill">Latidos</div>
+                                                <div class="beatPill">💓Latidos</div>
                                             </div>
 
                                             <div class="row align-items-center">
@@ -116,11 +116,11 @@
 
                                             <div class="options">
                                                 <select id="audioOptions" class="form-select" aria-label="Default select example">
-                                                    <option selected>Tipo de audio del click</option>
-                                                    <option value="1">Clásico</option>
-                                                    <option value="2">Grave</option>
-                                                    <option value="3">Natural</option>
-                                                    <option value="4">Cencerro</option>
+                                                    <option selected>Audio del click</option>
+                                                    <option value="1">🎻 Clásico</option>
+                                                    <option value="2">🎹 Grave</option>
+                                                    <option value="3">🪵 Natural</option>
+                                                    <option value="4">🖇 Cencerro</option>
                                                 </select>
                                             </div>
 
@@ -129,7 +129,7 @@
                                                     <div class="input-group-text">
                                                         <input id="stopwatchCheck" class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input" />
                                                     </div>
-                                                    <span class="input-group-text" id="inputGroup-sizing-sm">Cronómetro</span>
+                                                    <span class="input-group-text" id="inputGroup-sizing-sm">⌛ Cronómetro</span>
                                                     <input type="text" id="timeInput" class="form-control text-center" value="1:00" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" />
                                                 </div>
                                             </div>
@@ -160,6 +160,11 @@
             document.addEventListener('DOMContentLoaded', () => {
                 const volumeButton = document.getElementById('volumeButton');
                 const volumeSlider = document.getElementById('volumeSlider');
+
+                var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="tooltip"]'));
+                var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                    return new bootstrap.Tooltip(tooltipTriggerEl);
+                });
 
                 volumeButton.addEventListener('click', function () {
                     volumeSlider.classList.toggle('active');

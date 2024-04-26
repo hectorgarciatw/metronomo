@@ -12,6 +12,7 @@ const startButtonContent = document.getElementById('startStopButton').innerHTML;
 const beatsCircle = document.getElementById('beatsCircle');
 const audioOptions = document.getElementById('audioOptions');
 const darkModeSwitch = document.getElementById('modo-oscuro-switch');
+const volumeRange = document.getElementById('volumeRange');
 
 //Audio embebido en el html
 let tickSound = document.getElementById('tickSound1');
@@ -82,6 +83,45 @@ timeInput.addEventListener('click', function (event) {
         }
     }
 });
+
+// Ocultar slider del volumen al clickear en botones
+document.addEventListener('click', function (event) {
+    // Verificar si el clic se realizó en un botón
+    if (event.target.tagName === 'BUTTON') {
+        // Remover la clase 'active' del slider
+        volumeSlider.classList.remove('active');
+    }
+});
+
+// Escucha el evento clic en el input range
+volumeRange.addEventListener('click', function (event) {
+    // Evitar que el evento de clic se propague y cierre el slider
+    event.stopPropagation();
+});
+
+// Escucha el evento clic en el slider
+volumeSlider.addEventListener('click', function (event) {
+    // Evitar que el evento de clic se propague y cierre el slider
+    event.stopPropagation();
+});
+
+// Detecto el cambio de volumen
+volumeRange.addEventListener('input', () => {
+    // Obtener el valor del rango de volumen
+    const volumeValue = volumeRange.value;
+
+    // Cambiar el volumen del sonido del tick
+    changeVolume(volumeValue / 10); // Dividir por 10 ya que el rango es de 0 a 10
+});
+
+// Altera el volumen de reproducción
+function changeVolume(volume) {
+    // Comprueba de que el volumen esté en el rango de 0 a 1
+    volume = Math.max(0, Math.min(1, volume));
+
+    // Establecer el volumen del sonido del tick
+    tickSound.volume = volume;
+}
 
 // Pinto el beat que esta sonando actualmente
 function paintBeat(circleNumber) {
@@ -314,12 +354,19 @@ function handleTapTempo() {
         sum += tapTimes[i] - tapTimes[i - 1];
     }
     const averageInterval = sum / (tapTimes.length - 1);
-    const tempo = Math.round(60000 / averageInterval);
+    tempo = Math.round(60000 / averageInterval);
+    if (!isNaN(tempo) && isFinite(tempo)) {
+        // Limitar el tempo entre 1 y 240
+        tempo = Math.max(1, Math.min(tempo, 240));
 
-    console.log(`New tempo: ${tempo}`);
-    //updateTempo(tempo)
-    updateMetronome();
-    updateTempoDisplay();
+        console.log(`New tempo: ${tempo}`);
+        //updateTempo(tempo)
+        updateMetronome();
+        updateTempoDisplay();
+    } else {
+        // Si el resultado no es un número válido, no actualizamos el tempo
+        console.log('Not enough clicks to calculate tempo.');
+    }
 }
 
 // Inicializar el botón de tap tempo

@@ -26,7 +26,7 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">Inicio</a>
+                            <a class="nav-link" href="#">Información</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Acerca</a>
@@ -115,7 +115,7 @@
                                             </div>
 
                                             <div class="options">
-                                                <select id="audioOptions" class="form-select" aria-label="Default select example">
+                                                <select id="figureOptions" class="form-select" aria-label="Default select example">
                                                     <option selected>Subdivisiones</option>
                                                     <option value="1">&#x1D15F; - Negra</option>
                                                     <option value="2">&#x1D160; - Corchea</option>
@@ -135,15 +135,17 @@
                                                 </select>
                                             </div>
 
-                                            <div class="stopwatch">
-                                                <div class="input-group input-group-sm mb-3">
-                                                    <div class="input-group-text">
-                                                        <input id="stopwatchCheck" class="form-check-input mt-0" type="checkbox" value="" aria-label="Checkbox for following text input" />
-                                                    </div>
-                                                    <span class="input-group-text" id="inputGroup-sizing-sm">⌛ Cronómetro</span>
-                                                    <input type="text" id="timeInput" class="form-control text-center" value="1:00" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" />
-                                                </div>
+                                            <div class="countdown form-check form-switch d-flex align-items-center">
+                                                <input id="stopwatchCheck" class="form-check-input me-3" type="checkbox" id="flexSwitchCheckDefault" />
+                                                <label class="form-check-label me-3" for="flexSwitchCheckDefault">Temporizador</label>
+                                                <input type="text" id="timeInput" class="form-control text-center" value="1:00" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" />
                                             </div>
+
+                                            <div id="firstBeat" class="firstBeat form-check form-switch d-flex align-items-center">
+                                                <input id="firstBeatToogle" class="form-check-input me-3" type="checkbox" id="flexSwitchCheckDefault" />
+                                                <label class="form-check-label me-3" for="flexSwitchCheckDefault">Marcar el primer Beat</label>
+                                            </div>
+
                                             <div class="styleToogle form-check form-switch">
                                                 <input class="form-check-input" type="checkbox" id="modo-oscuro-switch" />
                                                 <label class="form-check-label" for="modo-oscuro-switch">

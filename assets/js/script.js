@@ -13,12 +13,7 @@ const beatsCircle = document.getElementById('beatsCircle');
 const audioOptions = document.getElementById('audioOptions');
 const darkModeSwitch = document.getElementById('modo-oscuro-switch');
 const volumeRange = document.getElementById('volumeRange');
-
-//Audio embebido en el html
-let tickSound = document.getElementById('tickSound1');
-let tickSound2 = document.getElementById('tickSound2');
-let tickSound3 = document.getElementById('tickSound3');
-let tickSound4 = document.getElementById('tickSound4');
+const firstBeatToogle = document.getElementById('firstBeatToogle');
 
 let isPlaying = false;
 let tempo = parseInt(bpmSlider.value);
@@ -31,6 +26,16 @@ let beatSize = 4;
 let beatCircles;
 //Para alojar el id del intervalo asociado al cronómetro/temporizador
 let intervalID;
+// El nro asociado al tick seleccionado
+let tickNumber = 1;
+
+// Precarga de los tipos de sonidos de los ticks
+function preloadSounds() {
+    tickSound = document.getElementById('tickSound1');
+    tickSound2 = document.getElementById('tickSound2');
+    tickSound3 = document.getElementById('tickSound3');
+    tickSound4 = document.getElementById('tickSound4');
+}
 
 // Toogle del modo oscuro/claro
 document.getElementById('modo-oscuro-switch').addEventListener('change', (event) => {
@@ -127,9 +132,9 @@ function changeVolume(volume) {
 function paintBeat(circleNumber) {
     beatCircles = document.querySelectorAll('.beat-circle');
     beatCircles.forEach((beatCircle, index) => {
-        if (index === circleNumber) {
+        if (index === circleNumber && beatCircle.style.backgroundColor !== '#ff3a27') {
             beatCircle.style.backgroundColor = '#ff3a27';
-        } else {
+        } else if (beatCircle.style.backgroundColor !== '#8d8c8c') {
             beatCircle.style.backgroundColor = '#8d8c8c';
         }
     });
@@ -184,6 +189,7 @@ function startMetronome() {
 
 function stopMetronome() {
     clearInterval(interval);
+    clearInterval(intervalID);
     musicalNote.classList.remove('bx-tada');
     startStopButton.innerHTML = startButtonContent;
     isPlaying = false;
@@ -196,7 +202,15 @@ function stopMetronome() {
 function tick() {
     // Reiniciar la reproducción al principio del audio
     tickSound.currentTime = 0;
+    auxTick = tickSound;
+    // Se diferencia el primer beat a pedido del usuario
+    if (beat % beatSize == 0 && firstBeatToogle.checked && tickNumber != 4) {
+        tickSound = tickSound4;
+    } else if (beat % beatSize == 0 && firstBeatToogle.checked && tickNumber == 4) {
+        tickSound = tickSound2;
+    }
     tickSound.play();
+    tickSound = auxTick;
     paintBeat(beat % beatSize);
     beat++;
 }
@@ -305,15 +319,19 @@ function changeAudioOptions() {
     let selectedValue = this.value;
     switch (selectedValue) {
         case '1':
+            tickNumber = 1;
             tickSound = tickSound1;
             break;
         case '2':
+            tickNumber = 2;
             tickSound = tickSound2;
             break;
         case '3':
+            tickNumber = 3;
             tickSound = tickSound3;
             break;
         case '4':
+            tickNumber = 4;
             tickSound = tickSound4;
             break;
         default:
@@ -330,6 +348,7 @@ function init() {
     decrementBeatCount.addEventListener('click', decrementBeatDisplay);
     audioOptions.addEventListener('change', changeAudioOptions);
     bpmSlider.addEventListener('input', handleBpmChange);
+    preloadSounds();
 }
 
 // TAP TEMPO ---- Variable para almacenar los tiempos de los clics

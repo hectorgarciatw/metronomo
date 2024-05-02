@@ -10,6 +10,10 @@ body {
     min-height: 100vh;
 }
 
+.countdown {
+    margin-top: 10px;
+}
+
 .blockquote-custom {
     position: relative;
     font-size: 1.1rem;
@@ -141,7 +145,7 @@ body {
 /* Fin circulos de los beats*/
 
 /* Estilo de la pelotita del input range */
-input[type="range"]::-webkit-slider-thumb {
+input[type='range']::-webkit-slider-thumb {
     background-color: #202529;
     border-radius: 50%;
 }
@@ -186,6 +190,10 @@ input[type="range"]::-webkit-slider-thumb {
     justify-content: center;
 }
 
+.firstBeat {
+    margin-top: 10px;
+}
+
 .bpm-pill {
     display: inline-block;
     padding: 0.5rem 1rem;
@@ -223,11 +231,13 @@ input[type="range"]::-webkit-slider-thumb {
 
 /* ZONA BEAT SELECTOR*/
 .beatSelector {
-    margin-top: 15px;
+    margin-top: 10px;
     display: flex;
     justify-content: space-between; /* Alinear los elementos al inicio y al final del contenedor */
     align-items: center; /* Centrar verticalmente los elementos */
+    margin-bottom: 15px;
 }
+
 .beatSelector div:first-child {
     margin-right: auto; /* Hacer que el primer div (Latidos) se alinee a la izquierda */
 }
@@ -300,12 +310,12 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 /* Cambiar el color de la pelotita del slider a negro */
-.volume-slider input[type="range"]::-webkit-slider-thumb {
+.volume-slider input[type='range']::-webkit-slider-thumb {
     background-color: black !important;
 }
 
 /* Cambiar el color de la pista deslizante del slider a rojo */
-.volume-slider input[type="range"]::-webkit-slider-runnable-track {
+.volume-slider input[type='range']::-webkit-slider-runnable-track {
     background-color: red;
 }
 
@@ -343,6 +353,10 @@ input[type="range"]::-webkit-slider-thumb {
     background-color: #444; /* Cambia el color de fondo de los bloques de citas */
 }
 
+.dark-mode .blockquote-custom-icon {
+    color: #000000;
+}
+
 .dark-mode .bg-white {
     background-color: #202529 !important;
 }
@@ -360,15 +374,7 @@ input[type="range"]::-webkit-slider-thumb {
     background-color: #ffffff; /* Cambia el color de fondo de la píldora de latidos */
 }
 
-.dark-mode .nav-link {
-    color: #ffffff;
-}
-
-.dark-mode .navbar-toggler .navbar-toggler-icon {
-    color: #ffffff !important;
-}
-
-.dark-mode input[type="range"]::-webkit-slider-thumb {
+.dark-mode input[type='range']::-webkit-slider-thumb {
     background-color: #ff3a27; /* Cambia el color a tu preferencia */
 }
 

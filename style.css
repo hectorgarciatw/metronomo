@@ -423,3 +423,13 @@ input[type='range']::-webkit-slider-thumb {
     padding: 20px 0; /* Ajusta el relleno según sea necesario */
     text-align: center; /* Alinea el contenido al centro si es necesario */
 }
+
+/* Color de fondo de los toogles */
+.form-check-input:checked {
+    background-color: #562cc9;
+}
+
+/* Select de las canciones clasicas */
+.songSelector {
+    margin-top: 10px;
+}

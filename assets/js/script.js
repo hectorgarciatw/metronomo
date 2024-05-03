@@ -14,6 +14,9 @@ const audioOptions = document.getElementById('audioOptions');
 const darkModeSwitch = document.getElementById('modo-oscuro-switch');
 const volumeRange = document.getElementById('volumeRange');
 const firstBeatToogle = document.getElementById('firstBeatToogle');
+const volumeSwitch = document.getElementById('volume-switch');
+const fullVolume = document.querySelector('.full-volume-icon');
+const lowVolume = document.querySelector('.low-volume-icon');
 
 let isPlaying = false;
 let tempo = parseInt(bpmSlider.value);
@@ -49,6 +52,18 @@ document.getElementById('modo-oscuro-switch').addEventListener('change', (event)
         document.querySelector('.modo-oscuro-icon').style.display = 'none';
         document.querySelector('.modo-claro-icon').style.display = 'inline-block';
         document.body.classList.remove('dark-mode');
+    }
+});
+
+document.getElementById('volume-switch').addEventListener('change', (event) => {
+    if (event.target.checked) {
+        tickSound.volume = 1;
+        lowVolume.style.display = 'none';
+        fullVolume.style.display = 'inline-block';
+    } else {
+        tickSound.volume = 0;
+        fullVolume.style.display = 'none';
+        lowVolume.style.display = 'inline-block';
     }
 });
 

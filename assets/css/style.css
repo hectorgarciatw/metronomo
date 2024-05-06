@@ -149,7 +149,7 @@ body {
 /* Fin circulos de los beats*/
 
 /* Estilo de la pelotita del input range */
-input[type='range']::-webkit-slider-thumb {
+input[type="range"]::-webkit-slider-thumb {
     background-color: #202529;
     border-radius: 50%;
 }
@@ -314,12 +314,12 @@ input[type='range']::-webkit-slider-thumb {
 }
 
 /* Cambiar el color de la pelotita del slider a negro */
-.volume-slider input[type='range']::-webkit-slider-thumb {
+.volume-slider input[type="range"]::-webkit-slider-thumb {
     background-color: black !important;
 }
 
 /* Cambiar el color de la pista deslizante del slider a rojo */
-.volume-slider input[type='range']::-webkit-slider-runnable-track {
+.volume-slider input[type="range"]::-webkit-slider-runnable-track {
     background-color: red;
 }
 
@@ -388,7 +388,7 @@ input[type='range']::-webkit-slider-thumb {
     background-color: #ffffff; /* Cambia el color de fondo de la píldora de latidos */
 }
 
-.dark-mode input[type='range']::-webkit-slider-thumb {
+.dark-mode input[type="range"]::-webkit-slider-thumb {
     background-color: #ff3a27; /* Cambia el color a tu preferencia */
 }
 
@@ -429,7 +429,25 @@ input[type='range']::-webkit-slider-thumb {
     background-color: #562cc9;
 }
 
-/* Select de las canciones clasicas */
-.songSelector {
-    margin-top: 10px;
+.footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border-top-left-radius: 20px;
+}
+
+.footer p {
+    margin: 0;
+}
+
+.footer::before {
+    content: "";
+    position: absolute;
+    bottom: -20px;
+    right: 50%;
+    border-top: 20px solid #333;
+    border-right: 20px solid transparent;
 }

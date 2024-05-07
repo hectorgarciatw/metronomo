@@ -1,21 +1,21 @@
-const bpmDisplay = document.getElementById('bpm');
-const startStopButton = document.getElementById('startStopButton');
-const decrementButton = document.getElementById('decrementButton');
-const incrementButton = document.getElementById('incrementButton');
-const incrementBeatCount = document.getElementById('incrementBeatCount');
-const decrementBeatCount = document.getElementById('decrementBeatCount');
-const beatsDisplay = document.getElementById('beatsDisplay');
-const bpmSlider = document.getElementById('bpmSlider');
-const classification = document.getElementById('classification');
-const musicalNote = document.querySelector('.bx.bxs-music');
-const startButtonContent = document.getElementById('startStopButton').innerHTML;
-const beatsCircle = document.getElementById('beatsCircle');
-const audioOptions = document.getElementById('audioOptions');
-const darkModeSwitch = document.getElementById('modo-oscuro-switch');
-const firstBeatToogle = document.getElementById('firstBeatToogle');
-const volumeSwitch = document.getElementById('volume-switch');
-const fullVolume = document.querySelector('.full-volume-icon');
-const lowVolume = document.querySelector('.low-volume-icon');
+const bpmDisplay = document.getElementById("bpm");
+const startStopButton = document.getElementById("startStopButton");
+const decrementButton = document.getElementById("decrementButton");
+const incrementButton = document.getElementById("incrementButton");
+const incrementBeatCount = document.getElementById("incrementBeatCount");
+const decrementBeatCount = document.getElementById("decrementBeatCount");
+const beatsDisplay = document.getElementById("beatsDisplay");
+const bpmSlider = document.getElementById("bpmSlider");
+const classification = document.getElementById("classification");
+const musicalNote = document.querySelector(".bx.bxs-music");
+const startButtonContent = document.getElementById("startStopButton").innerHTML;
+const beatsCircle = document.getElementById("beatsCircle");
+const audioOptions = document.getElementById("audioOptions");
+const darkModeSwitch = document.getElementById("modo-oscuro-switch");
+const firstBeatToogle = document.getElementById("firstBeatToogle");
+const volumeSwitch = document.getElementById("volume-switch");
+const fullVolume = document.querySelector(".full-volume-icon");
+const lowVolume = document.querySelector(".low-volume-icon");
 
 let isPlaying = false;
 let tempo = parseInt(bpmSlider.value);
@@ -29,49 +29,148 @@ let beatCircles;
 //Para alojar el id del intervalo asociado al cronómetro/temporizador
 let intervalID;
 // El nro asociado al tick seleccionado
-let tickNumber = 1;
+let tickNumber = 0;
+// Aloja la figura de subdivisión seleccionada por el usuario
+let beatFigure;
+// Variable para el contexto de audio
+let audioContext;
+// Variable para el sonido del tick
+let tickSound;
+// Almacena los buffers de audio de los sonidos del ticks
+let tickSources = [];
 
-// Precarga de los tipos de sonidos de los ticks
-function preloadSounds() {
-    tickSound = document.getElementById('tickSound1');
-    tickSound2 = document.getElementById('tickSound2');
-    tickSound3 = document.getElementById('tickSound3');
-    tickSound4 = document.getElementById('tickSound4');
+// Cambiar la subdivisión correspondiente
+function changeSubdivision() {
+    beatFigure = parseInt(this.value);
+    updateMetronome();
 }
 
+// Variable para el nodo de ganancia
+let gainNode;
+
+// Función para crear el nodo de ganancia (vinculado al manejo del volumen)
+function createGainNode() {
+    // Crear un nodo de ganancia
+    gainNode = audioContext.createGain();
+    // Conectar el nodo de ganancia al destino de audio
+    gainNode.connect(audioContext.destination);
+}
+
+// Función para cargar los sonidos del tick como buffers de audio
+function preloadSounds() {
+    // Contexto de audio
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    // Rutas de los archivos de audio
+    const tickSoundUrls = ["/assets/audios/classic.mp3", "/assets/audios/loud.mp3", "/assets/audios/naturalHigh.mp3", "/assets/audios/can.mp3"];
+
+    // Cargar cada sonido como un buffer de audio
+    tickSoundUrls.forEach((soundUrl, index) => {
+        loadSound(soundUrl, index);
+    });
+}
+
+// Carga del sonido
+function loadSound(soundUrl, index) {
+    // Añade el parámetro 'index'
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", soundUrl, true);
+    xhr.responseType = "arraybuffer";
+
+    xhr.onload = function () {
+        audioContext.decodeAudioData(
+            xhr.response,
+            function (buffer) {
+                // Almacena el buffer en tickSources en la posición correspondiente
+                tickSources[index] = buffer;
+
+                // Una vez cargado el sonido, puedes conectarlo al nodo de ganancia
+                let source = audioContext.createBufferSource();
+                source.buffer = tickSources[index];
+
+                // Conecta el nodo de buffer source al nodo de ganancia
+                source.connect(gainNode);
+            },
+            function (error) {
+                console.error("Error al decodificar el archivo de audio:", error);
+            }
+        );
+    };
+
+    xhr.send();
+}
+
+// Activación/Desactivación del sonido
+function changeVolume(volume) {
+    gainNode.gain.value = volume;
+}
+
+// Reproducción del Tick
+function playTickSound(index) {
+    let source = audioContext.createBufferSource();
+    source.buffer = tickSources[index];
+    source.connect(audioContext.destination);
+    source.start(0);
+}
+
+// Variable para rastrear si se ha modificado el buffer para el primer tick
+let firstTickModified = false;
+
+// Reproducir del sonido en general
+function tick() {
+    // Seleccionar el buffer del sonido del tick basado en tickNumber
+    let tickBuffer = tickSources[tickNumber];
+
+    if (tickBuffer) {
+        // Crear un buffer source
+        let source = audioContext.createBufferSource();
+        source.buffer = tickBuffer;
+        // Conectar el buffer source al nodo de ganancia
+        source.connect(gainNode);
+        // Reproducir el sonido del tick
+        source.start(0);
+        paintBeat(beat % beatSize);
+        beat++;
+    } else {
+        console.error("Buffer de audio no encontrado para tickNumber:", tickNumber);
+    }
+}
+
+document.getElementById("figureOptions").addEventListener("change", changeSubdivision);
+
 // Toogle del modo oscuro/claro
-document.getElementById('modo-oscuro-switch').addEventListener('change', (event) => {
+document.getElementById("modo-oscuro-switch").addEventListener("change", (event) => {
     if (event.target.checked) {
         // Cambiar al modo oscuro
-        document.querySelector('.modo-claro-icon').style.display = 'none';
-        document.querySelector('.modo-oscuro-icon').style.display = 'inline-block';
-        document.body.classList.add('dark-mode');
+        document.querySelector(".modo-claro-icon").style.display = "none";
+        document.querySelector(".modo-oscuro-icon").style.display = "inline-block";
+        document.body.classList.add("dark-mode");
     } else {
         // Cambiar al modo claro
-        document.querySelector('.modo-oscuro-icon').style.display = 'none';
-        document.querySelector('.modo-claro-icon').style.display = 'inline-block';
-        document.body.classList.remove('dark-mode');
+        document.querySelector(".modo-oscuro-icon").style.display = "none";
+        document.querySelector(".modo-claro-icon").style.display = "inline-block";
+        document.body.classList.remove("dark-mode");
     }
 });
 
-document.getElementById('volume-switch').addEventListener('change', (event) => {
+document.getElementById("volume-switch").addEventListener("change", (event) => {
     if (event.target.checked) {
-        tickSound.volume = 1;
-        lowVolume.style.display = 'none';
-        fullVolume.style.display = 'inline-block';
+        changeVolume(1);
+        lowVolume.style.display = "none";
+        fullVolume.style.display = "inline-block";
     } else {
-        tickSound.volume = 0;
-        fullVolume.style.display = 'none';
-        lowVolume.style.display = 'inline-block';
+        console.log("APAGAR");
+        changeVolume(0);
+        fullVolume.style.display = "none";
+        lowVolume.style.display = "inline-block";
     }
 });
 
-timeInput.addEventListener('input', function () {
+timeInput.addEventListener("input", function () {
     let value = this.value;
     // Elimina cualquier carácter que no sea un número o ":"
-    value = value.replace(/[^0-9:]/g, '');
+    value = value.replace(/[^0-9:]/g, "");
     // Divide el valor en minutos y segundos
-    let parts = value.split(':');
+    let parts = value.split(":");
     let minutes = parseInt(parts[0]) || 0;
     let seconds = parseInt(parts[1]) || 0;
     // Asegúrate de que los minutos estén en el rango de 0 a 59
@@ -79,47 +178,42 @@ timeInput.addEventListener('input', function () {
     // Asegúrate de que los segundos estén en el rango de 0 a 59
     seconds = Math.min(Math.max(0, seconds), 59);
     // Formatea los minutos y segundos para que tengan siempre dos dígitos
-    let formattedMinutes = String(minutes).padStart(2, '0');
-    let formattedSeconds = String(seconds).padStart(2, '0');
+    let formattedMinutes = String(minutes).padStart(2, "0");
+    let formattedSeconds = String(seconds).padStart(2, "0");
     // Actualiza el valor del input con el nuevo formato "mm:ss"
-    this.value = formattedMinutes + ':' + formattedSeconds;
+    this.value = formattedMinutes + ":" + formattedSeconds;
 });
 
 // Agrega eventos de clic para permitir la edición directa de minutos y segundos
-timeInput.addEventListener('click', function (event) {
+timeInput.addEventListener("click", function (event) {
     const selection = window.getSelection().toString();
-    if (selection === '') {
+    if (selection === "") {
         // Determina si el clic se realizó en la parte de minutos o segundos
         const cursorPos = this.selectionStart;
-        const isMinutes = cursorPos <= 1; // Primeros dos caracteres son minutos
-        const isSeconds = cursorPos > 2; // Después del segundo carácter son segundos
+        // Primeros dos caracteres son minutos
+        const isMinutes = cursorPos <= 1;
+        // Después del segundo carácter son segundos
+        const isSeconds = cursorPos > 2;
 
         // Si es minutos o segundos, selecciona el valor para permitir la edición directa
         if (isMinutes) {
-            this.setSelectionRange(0, 2); // Selecciona los minutos
+            // Selecciona los minutos
+            this.setSelectionRange(0, 2);
         } else if (isSeconds) {
-            this.setSelectionRange(3, 5); // Selecciona los segundos
+            // Selecciona los segundos
+            this.setSelectionRange(3, 5);
         }
     }
 });
 
-// Ocultar slider del volumen al clickear en botones
-document.addEventListener('click', function (event) {
-    // Verificar si el clic se realizó en un botón
-    if (event.target.tagName === 'BUTTON') {
-        // Remover la clase 'active' del slider
-        volumeSlider.classList.remove('active');
-    }
-});
-
-// Pinto el beat que esta sonando actualmente
+// Pinto el beat que esta sonando actualmente en la sección de Latidos
 function paintBeat(circleNumber) {
-    beatCircles = document.querySelectorAll('.beat-circle');
+    beatCircles = document.querySelectorAll(".beat-circle");
     beatCircles.forEach((beatCircle, index) => {
-        if (index === circleNumber && beatCircle.style.backgroundColor !== '#ff3a27') {
-            beatCircle.style.backgroundColor = '#ff3a27';
-        } else if (beatCircle.style.backgroundColor !== '#8d8c8c') {
-            beatCircle.style.backgroundColor = '#8d8c8c';
+        if (index === circleNumber && beatCircle.style.backgroundColor !== "#ff3a27") {
+            beatCircle.style.backgroundColor = "#ff3a27";
+        } else if (beatCircle.style.backgroundColor !== "#8d8c8c") {
+            beatCircle.style.backgroundColor = "#8d8c8c";
         }
     });
 }
@@ -140,7 +234,7 @@ function startMetronome() {
     const intervalMs = 60000 / tempo;
     tick();
     interval = setInterval(tick, intervalMs);
-    musicalNote.classList.add('bx-tada');
+    musicalNote.classList.add("bx-tada");
     startStopButton.innerHTML = `
     <i class="bx bx-stop-circle bx-md"></i>
     `;
@@ -148,7 +242,7 @@ function startMetronome() {
 
     if (stopwatchCheck.checked) {
         // Si el checkbox está marcado, comenzar el cronómetro
-        const startTime = timeInput.value.split(':');
+        const startTime = timeInput.value.split(":");
         let minutos = parseInt(startTime[0]);
         let segundos = parseInt(startTime[1]);
 
@@ -166,7 +260,7 @@ function startMetronome() {
             }
 
             // Actualizar el valor del input con el nuevo tiempo
-            timeInput.value = minutos.toString().padStart(2, '0') + ':' + segundos.toString().padStart(2, '0');
+            timeInput.value = minutos.toString().padStart(2, "0") + ":" + segundos.toString().padStart(2, "0");
         }, 1000);
     }
 }
@@ -174,29 +268,12 @@ function startMetronome() {
 function stopMetronome() {
     clearInterval(interval);
     clearInterval(intervalID);
-    musicalNote.classList.remove('bx-tada');
+    musicalNote.classList.remove("bx-tada");
     startStopButton.innerHTML = startButtonContent;
     isPlaying = false;
     clearInterval(intervalID);
     stopwatchCheck.checked = false;
     stopwatchCheck.disabled = false;
-}
-
-// Reproducir el sonido del tick
-function tick() {
-    // Reiniciar la reproducción al principio del audio
-    tickSound.currentTime = 0;
-    auxTick = tickSound;
-    // Se diferencia el primer beat a pedido del usuario
-    if (beat % beatSize == 0 && firstBeatToogle.checked && tickNumber != 4) {
-        tickSound = tickSound4;
-    } else if (beat % beatSize == 0 && firstBeatToogle.checked && tickNumber == 4) {
-        tickSound = tickSound2;
-    }
-    tickSound.play();
-    tickSound = auxTick;
-    paintBeat(beat % beatSize);
-    beat++;
 }
 
 function updateMetronome() {
@@ -236,31 +313,31 @@ function updateTempoDisplay() {
     bpmDisplay.textContent = tempo;
     switch (true) {
         case tempo <= 20:
-            return (classification.textContent = 'Larghissimo');
+            return (classification.textContent = "Larghissimo");
         case tempo <= 40:
-            return (classification.textContent = 'Grave');
+            return (classification.textContent = "Grave");
         case tempo <= 45:
-            return (classification.textContent = 'Lento');
+            return (classification.textContent = "Lento");
         case tempo <= 50:
-            return (classification.textContent = 'Largo');
+            return (classification.textContent = "Largo");
         case tempo <= 60:
-            return (classification.textContent = 'Adagio');
+            return (classification.textContent = "Adagio");
         case tempo <= 70:
-            return (classification.textContent = 'Adagietto');
+            return (classification.textContent = "Adagietto");
         case tempo <= 85:
-            return (classification.textContent = 'Andante');
+            return (classification.textContent = "Andante");
         case tempo <= 97:
-            return (classification.textContent = 'Moderato');
+            return (classification.textContent = "Moderato");
         case tempo <= 109:
-            return (classification.textContent = 'Allegretto');
+            return (classification.textContent = "Allegretto");
         case tempo <= 132:
-            return (classification.textContent = 'Allegro');
+            return (classification.textContent = "Allegro");
         case tempo <= 140:
-            return (classification.textContent = 'Vivace');
+            return (classification.textContent = "Vivace");
         case tempo <= 177:
-            return (classification.textContent = 'Presto');
+            return (classification.textContent = "Presto");
         case tempo <= 240:
-            return (classification.textContent = 'Prestissimo');
+            return (classification.textContent = "Prestissimo");
     }
 }
 
@@ -270,8 +347,8 @@ function incrementBeatDisplay() {
     if (beats < 8) {
         beats++;
         beatSize++;
-        let newBeatCircle = document.createElement('div');
-        newBeatCircle.className = 'beat-circle';
+        let newBeatCircle = document.createElement("div");
+        newBeatCircle.className = "beat-circle";
         beatsCircles.insertBefore(newBeatCircle, beatsCircles.firstChild);
         beatsDisplay.textContent = beats;
     }
@@ -284,12 +361,12 @@ function decrementBeatDisplay() {
         beats--;
         beatSize--;
         // Obtener todos los elementos 'beat-circle' dentro de beatsCircles
-        let beatCircles = document.querySelectorAll('#beatsCircles .beat-circle');
+        let beatCircles = document.querySelectorAll("#beatsCircles .beat-circle");
         // Verificar que haya al menos un beat-circle que no sea beatPill
         if (beatCircles.length > 1) {
             // Eliminar el último beat-circle que no sea beatPill
             for (let i = beatCircles.length - 1; i >= 0; i--) {
-                if (!beatCircles[i].classList.contains('beatPill')) {
+                if (!beatCircles[i].classList.contains("beatPill")) {
                     beatsCircles.removeChild(beatCircles[i]);
                     break;
                 }
@@ -299,45 +376,43 @@ function decrementBeatDisplay() {
     }
 }
 
+// Selección de tipos de ticks
 function changeAudioOptions() {
     let selectedValue = this.value;
     switch (selectedValue) {
-        case '1':
+        case "1":
+            tickNumber = 0;
+            break;
+        case "2":
             tickNumber = 1;
-            tickSound = tickSound1;
             break;
-        case '2':
+        case "3":
             tickNumber = 2;
-            tickSound = tickSound2;
             break;
-        case '3':
+        case "4":
             tickNumber = 3;
-            tickSound = tickSound3;
-            break;
-        case '4':
-            tickNumber = 4;
-            tickSound = tickSound4;
             break;
         default:
-            console.log('Opción no reconocida');
+            console.log("Opción no reconocida");
+            return;
     }
 }
 
 // Inicializar el metrónomo
 function init() {
-    startStopButton.addEventListener('click', startStop);
-    decrementButton.addEventListener('click', decrementTempo);
-    incrementButton.addEventListener('click', incrementTempo);
-    incrementBeatCount.addEventListener('click', incrementBeatDisplay);
-    decrementBeatCount.addEventListener('click', decrementBeatDisplay);
-    audioOptions.addEventListener('change', changeAudioOptions);
-    bpmSlider.addEventListener('input', handleBpmChange);
+    startStopButton.addEventListener("click", startStop);
+    decrementButton.addEventListener("click", decrementTempo);
+    incrementButton.addEventListener("click", incrementTempo);
+    incrementBeatCount.addEventListener("click", incrementBeatDisplay);
+    decrementBeatCount.addEventListener("click", decrementBeatDisplay);
+    audioOptions.addEventListener("change", changeAudioOptions);
+    bpmSlider.addEventListener("input", handleBpmChange);
     preloadSounds();
 }
 
 // TAP TEMPO ---- Variable para almacenar los tiempos de los clics
 let tapTimes = [];
-const tapTempoButton = document.getElementById('tapTempoButton');
+const tapTempoButton = document.getElementById("tapTempoButton");
 
 // Función para manejar los clics en el botón de tap tempo
 function handleTapTempo() {
@@ -368,13 +443,14 @@ function handleTapTempo() {
         updateTempoDisplay();
     } else {
         // Si el resultado no es un número válido, no actualizamos el tempo
-        console.log('Not enough clicks to calculate tempo.');
+        console.log("Not enough clicks to calculate tempo.");
     }
 }
 
 // Inicializar el botón de tap tempo
-tapTempoButton.addEventListener('click', handleTapTempo);
+tapTempoButton.addEventListener("click", handleTapTempo);
 
 // FIN TAP TEMPO
 
 init();
+createGainNode();

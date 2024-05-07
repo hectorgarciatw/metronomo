@@ -201,7 +201,7 @@ input[type="range"]::-webkit-slider-thumb {
 .bpm-pill {
     display: inline-block;
     padding: 0.5rem 1rem;
-    background-color: #ff3a27;
+    background-color: #562cc9;
     color: #fff;
     border-radius: 999px;
     margin: -10px 0 -30px;
@@ -359,7 +359,7 @@ input[type="range"]::-webkit-slider-thumb {
 /* MODO OSCURO*/
 /* Estilos para la versión oscura */
 .dark-mode {
-    background-color: #222; /* Cambia el color de fondo a negro */
+    background-color: #393939; /* Cambia el color de fondo a negro */
     color: #fff; /* Cambia el color del texto a blanco */
 }
 

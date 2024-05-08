@@ -135,15 +135,15 @@ body {
 
 .beatPill {
     display: inline-block;
-    padding: 1px 4px; /* Ajusta el relleno según sea necesario */
-    border-radius: 6px; /* Ajusta el radio de borde según sea necesario */
+    padding: 1px 4px;
+    border-radius: 6px;
     background-color: #ffdf31;
     color: #202529;
-    font-size: 0.6em; /* Ajusta el tamaño del texto según sea necesario */
-    opacity: 0.9; /* Opacidad del texto para que sea sutil */
-    margin-left: 5px; /* Espacio entre el último beat-circle y el texto */
-    max-height: 20px; /* Altura máxima de la píldora */
-    line-height: 17px; /* Centrar verticalmente el texto */
+    font-size: 0.6em;
+    opacity: 0.9;
+    margin-left: 5px;
+    max-height: 20px;
+    line-height: 17px;
 }
 
 /* Fin circulos de los beats*/
@@ -165,16 +165,16 @@ input[type="range"]::-webkit-slider-thumb {
     }
 
     .btn-circle {
-        width: 28px; /* Ancho más pequeño para los botones */
-        height: 28px; /* Altura más pequeña para los botones */
-        font-size: 8px; /* Tamaño de fuente más pequeño para los iconos */
-        padding: 0; /* Eliminar el relleno para reducir el espacio */
+        width: 28px;
+        height: 28px;
+        font-size: 8px;
+        padding: 0;
     }
 }
 
 @media (max-width: 767px) {
     .col-auto {
-        margin: 5px; /* Ajustar el margen para evitar el amontonamiento de elementos */
+        margin: 5px;
     }
 }
 
@@ -213,8 +213,8 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 #startStopButton {
-    display: flex; /* Activamos flexbox en el botón */
-    align-items: center; /* Alineamos verticalmente los elementos del botón */
+    display: flex;
+    align-items: center;
 }
 
 #incrementButton,
@@ -228,8 +228,8 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .btn {
-    text-align: center !important; /* Centra el texto horizontalmente */
-    display: inline-block !important; /* Mantiene el tamaño del botón */
+    text-align: center !important;
+    display: inline-block !important;
 }
 /* FIN DEL CONTENIDO INTERNO DEL JUMBOTRON */
 
@@ -237,17 +237,17 @@ input[type="range"]::-webkit-slider-thumb {
 .beatSelector {
     margin-top: 10px;
     display: flex;
-    justify-content: space-between; /* Alinear los elementos al inicio y al final del contenedor */
-    align-items: center; /* Centrar verticalmente los elementos */
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 15px;
 }
 
 .beatSelector div:first-child {
-    margin-right: auto; /* Hacer que el primer div (Latidos) se alinee a la izquierda */
+    margin-right: auto;
 }
 .beatSelector button {
-    margin-left: 10px; /* Añadir un pequeño margen entre los botones y los números */
-    margin-right: 10px; /* Añadir un pequeño margen entre los botones y los números */
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .btn-beatSelector {
@@ -269,9 +269,9 @@ input[type="range"]::-webkit-slider-thumb {
 
 @media screen and (max-width: 768px) {
     .btn-beatSelector {
-        width: 25px; /* Ancho aumentado para dispositivos móviles */
-        height: 25px; /* Altura aumentada para dispositivos móviles */
-        font-size: 0.5rem; /* Tamaño de fuente aumentado para dispositivos móviles */
+        width: 25px;
+        height: 25px;
+        font-size: 0.5rem;
     }
 }
 /* FIN BEAT SELECTOR*/
@@ -303,10 +303,10 @@ input[type="range"]::-webkit-slider-thumb {
     position: absolute;
     bottom: 35%;
     right: -10px;
-    transform: translateX(50%); /* Corrige el desplazamiento a la izquierda */
-    transform: rotate(-90deg); /* Rota el slider verticalmente */
-    transform-origin: bottom right; /* Establece el origen de la rotación */
-    width: 100px; /* Ancho del slider */
+    transform: translateX(50%);
+    transform: rotate(-90deg);
+    transform-origin: bottom right;
+    width: 100px;
 }
 
 .volume-slider.active {
@@ -330,8 +330,8 @@ input[type="range"]::-webkit-slider-thumb {
 .stopwatch {
     margin-top: 15px;
     display: flex;
-    justify-content: space-between; /* Alinear los elementos al inicio y al final del contenedor */
-    align-items: center; /* Centrar verticalmente los elementos */
+    justify-content: space-between;
+    align-items: center;
 }
 
 /* Fin cronómetro*
@@ -359,12 +359,12 @@ input[type="range"]::-webkit-slider-thumb {
 /* MODO OSCURO*/
 /* Estilos para la versión oscura */
 .dark-mode {
-    background-color: #393939; /* Cambia el color de fondo a negro */
-    color: #fff; /* Cambia el color del texto a blanco */
+    background-color: #393939;
+    color: #fff;
 }
 
 .dark-mode .blockquote-custom {
-    background-color: #444; /* Cambia el color de fondo de los bloques de citas */
+    background-color: #444;
 }
 
 .dark-mode .blockquote-custom-icon {
@@ -377,26 +377,26 @@ input[type="range"]::-webkit-slider-thumb {
 
 .dark-mode .bpm-container,
 .dark-mode .beats {
-    color: #fff; /* Cambia el color del texto de los controles de ritmo */
+    color: #fff;
 }
 
 .dark-mode .bpm-pill {
-    background-color: #555; /* Cambia el color de fondo de la píldora BPM */
+    background-color: #555;
 }
 
 .dark-mode .beatPill {
-    background-color: #ffffff; /* Cambia el color de fondo de la píldora de latidos */
+    background-color: #ffffff;
 }
 
 .dark-mode input[type="range"]::-webkit-slider-thumb {
-    background-color: #ff3a27; /* Cambia el color a tu preferencia */
+    background-color: #ff3a27;
 }
 
 .dark-mode #decrementBeatCount,
 .dark-mode #incrementBeatCount {
-    color: #ffffff; /* Cambia el color del texto del botón */
-    background-color: #e65531 !important; /* Cambia el color de fondo del botón */
-    border-color: #ffffff; /* Cambia el color del borde del botón */
+    color: #ffffff;
+    background-color: #e65531 !important;
+    border-color: #ffffff;
 }
 
 /* Ocultar el icono de luna por defecto */
@@ -419,9 +419,9 @@ input[type="range"]::-webkit-slider-thumb {
     position: absolute;
     bottom: 0;
     width: 100%;
-    background-color: #f8f9fa; /* Color de fondo del footer */
-    padding: 20px 0; /* Ajusta el relleno según sea necesario */
-    text-align: center; /* Alinea el contenido al centro si es necesario */
+    background-color: #f8f9fa;
+    padding: 20px 0;
+    text-align: center;
 }
 
 /* Color de fondo de los toogles */

@@ -18,6 +18,7 @@ const fullVolume = document.querySelector(".full-volume-icon");
 const lowVolume = document.querySelector(".low-volume-icon");
 
 let isPlaying = false;
+// Tempo establecido por el usario a través del slider
 let tempo = parseInt(bpmSlider.value);
 let interval;
 // Representa el beat que está sonando
@@ -40,12 +41,14 @@ let tickSound;
 let tickSources = [];
 // Bandera auxiliar para el marcado del 1er beat
 let flag = true;
-
+// Tick aleatorio del 1er beat
 let randomTick;
+// Almacena el indice de audio precargado aleatorio para el 1er beat
+let randomTickIndex;
 
+// Toogle del 1er beat
 firstBeatToogle.addEventListener("change", function (event) {
     if (this.checked) {
-        console.log("firstBeatToogle");
     } else {
         flag = true;
     }
@@ -57,7 +60,7 @@ function changeSubdivision() {
     updateMetronome();
 }
 
-// Variable para el nodo de ganancia
+// Variable para el nodo de ganancia (para el manejo del volumen)
 let gainNode;
 
 // Función para crear el nodo de ganancia (vinculado al manejo del volumen)
@@ -72,6 +75,7 @@ function createGainNode() {
 function preloadSounds() {
     // Contexto de audio
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    source = audioContext.createBufferSource();
     // Rutas de los archivos de audio
     const tickSoundUrls = ["/assets/audios/classic.mp3", "/assets/audios/loud.mp3", "/assets/audios/naturalHigh.mp3", "/assets/audios/can.mp3"];
 
@@ -141,21 +145,23 @@ function randomExclusive(v) {
 function tick() {
     // Seleccionar el buffer del sonido del tick basado en tickNumber
     let tickBuffer = tickSources[tickNumber];
-    randomTick = randomExclusive(tickNumber);
-    let source = audioContext.createBufferSource();
+
     if (firstBeatToogle.checked && beat % beatSize === 0) {
-        randomTick = tickSources[randomExclusive(tickNumber)];
+        if (flag) {
+            randomTickIndex = randomExclusive(tickNumber);
+            flag = false;
+        }
 
-        source.buffer = randomTick;
-    } else {
-        // Crear un buffer source
-
-        source.buffer = tickBuffer;
+        tickBuffer = tickSources[randomTickIndex];
     }
+
+    // Crear un nuevo nodo de origen de audio
+    let tickSource = audioContext.createBufferSource();
+    tickSource.buffer = tickBuffer;
     // Conectar el buffer source al nodo de ganancia
-    source.connect(gainNode);
+    tickSource.connect(gainNode);
     // Reproducir el sonido del tick
-    source.start(0);
+    tickSource.start(0);
     paintBeat(beat % beatSize);
     beat++;
 }
@@ -183,7 +189,6 @@ document.getElementById("volume-switch").addEventListener("change", (event) => {
         lowVolume.style.display = "none";
         fullVolume.style.display = "inline-block";
     } else {
-        console.log("APAGAR");
         changeVolume(0);
         fullVolume.style.display = "none";
         lowVolume.style.display = "inline-block";
@@ -407,15 +412,19 @@ function changeAudioOptions() {
     switch (selectedValue) {
         case "1":
             tickNumber = 0;
+            flag = true;
             break;
         case "2":
             tickNumber = 1;
+            flag = true;
             break;
         case "3":
             tickNumber = 2;
+            flag = true;
             break;
         case "4":
             tickNumber = 3;
+            flag = true;
             break;
         default:
             console.log("Opción no reconocida");
@@ -461,21 +470,17 @@ function handleTapTempo() {
     if (!isNaN(tempo) && isFinite(tempo)) {
         // Limitar el tempo entre 1 y 240
         tempo = Math.max(1, Math.min(tempo, 240));
-
-        console.log(`New tempo: ${tempo}`);
         //updateTempo(tempo)
         updateMetronome();
         updateTempoDisplay();
     } else {
         // Si el resultado no es un número válido, no actualizamos el tempo
-        console.log("Not enough clicks to calculate tempo.");
+        console.log("Faltan clicks para determinar tempo.");
     }
 }
 
 // Inicializar el botón de tap tempo
 tapTempoButton.addEventListener("click", handleTapTempo);
-
-// FIN TAP TEMPO
 
 init();
 createGainNode();

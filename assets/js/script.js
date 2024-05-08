@@ -38,6 +38,18 @@ let audioContext;
 let tickSound;
 // Almacena los buffers de audio de los sonidos del ticks
 let tickSources = [];
+// Bandera auxiliar para el marcado del 1er beat
+let flag = true;
+
+let randomTick;
+
+firstBeatToogle.addEventListener("change", function (event) {
+    if (this.checked) {
+        console.log("firstBeatToogle");
+    } else {
+        flag = true;
+    }
+});
 
 // Cambiar la subdivisión correspondiente
 function changeSubdivision() {
@@ -115,24 +127,37 @@ function playTickSound(index) {
 // Variable para rastrear si se ha modificado el buffer para el primer tick
 let firstTickModified = false;
 
+// Genero número aleatorio entre la cantidad de ticks excluyendo un valor determinado
+function randomExclusive(v) {
+    let n;
+    do {
+        // Genera un número aleatorio entre 0 y 3
+        n = Math.floor(Math.random() * 4);
+    } while (n === v);
+    return n;
+}
+
 // Reproducir del sonido en general
 function tick() {
     // Seleccionar el buffer del sonido del tick basado en tickNumber
     let tickBuffer = tickSources[tickNumber];
+    randomTick = randomExclusive(tickNumber);
+    let source = audioContext.createBufferSource();
+    if (firstBeatToogle.checked && beat % beatSize === 0) {
+        randomTick = tickSources[randomExclusive(tickNumber)];
 
-    if (tickBuffer) {
-        // Crear un buffer source
-        let source = audioContext.createBufferSource();
-        source.buffer = tickBuffer;
-        // Conectar el buffer source al nodo de ganancia
-        source.connect(gainNode);
-        // Reproducir el sonido del tick
-        source.start(0);
-        paintBeat(beat % beatSize);
-        beat++;
+        source.buffer = randomTick;
     } else {
-        console.error("Buffer de audio no encontrado para tickNumber:", tickNumber);
+        // Crear un buffer source
+
+        source.buffer = tickBuffer;
     }
+    // Conectar el buffer source al nodo de ganancia
+    source.connect(gainNode);
+    // Reproducir el sonido del tick
+    source.start(0);
+    paintBeat(beat % beatSize);
+    beat++;
 }
 
 document.getElementById("figureOptions").addEventListener("change", changeSubdivision);

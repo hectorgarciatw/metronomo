@@ -28,17 +28,17 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#">Acerca</a>
+                            <a class="nav-link acerca" href="#">Acerca</a>
                         </li>
                         <!-- Dropdown de idioma -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <i class="bx bx-globe"></i> Idiomas </a>
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <i class="bx bx-world"></i> Idiomas </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li>
-                                    <a class="dropdown-item" href="#"><img src="/assets/images/flags/esp.png" alt="Español" /> Español</a>
+                                    <a id="toSpanish" class="dropdown-item active" href="#"><img src="/assets/images/flags/esp.png" alt="Español" /> Español <i class="bx bx-check"></i></a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#"><img src="/assets/images/flags/en.png" alt="Inglés" /> Inglés</a>
+                                    <a id="toEnglish" class="dropdown-item" href="#"><img src="/assets/images/flags/en.png" alt="Inglés" /> Inglés</a>
                                 </li>
                             </ul>
                         </li>
@@ -95,7 +95,7 @@
                                             </div>
 
                                             <div class="beatSelector">
-                                                <div>Latidos</div>
+                                                <div class="beatCounter">Latidos</div>
                                                 <button id="decrementBeatCount" class="btn btn-outline btn-beatSelector" type="button">
                                                     <i class="bx bx-minus"></i>
                                                 </button>
@@ -171,10 +171,11 @@
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script src="/assets/js/script.js"></script>
+        <script src="/assets/js/translate.js"></script>
         <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                const volumeButton = document.getElementById("volumeButton");
-                const volumeSlider = document.getElementById("volumeSlider");
+            document.addEventListener('DOMContentLoaded', () => {
+                const volumeButton = document.getElementById('volumeButton');
+                const volumeSlider = document.getElementById('volumeSlider');
 
                 var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-toggle="tooltip"]'));
                 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -182,32 +183,20 @@
                 });
 
                 // Obtener el elemento del dropdown
-                const dropdown = document.querySelector(".dropdown");
+                const dropdown = document.querySelector('.dropdown');
 
                 // Para el comportamiento del logo
-                const navbarCollapse = document.querySelector(".navbar-collapse");
-                const navbarBrand = document.querySelector(".navbar-brand");
+                const navbarCollapse = document.querySelector('.navbar-collapse');
+                const navbarBrand = document.querySelector('.navbar-brand');
 
                 // Evento para detectar la expansión del navbar
-                navbarCollapse.addEventListener("show.bs.collapse", () => {
-                    navbarBrand.style.display = "none"; // Ocultar el logo
+                navbarCollapse.addEventListener('show.bs.collapse', () => {
+                    navbarBrand.style.display = 'none'; // Ocultar el logo
                 });
 
                 // Evento para detectar la contracción del navbar
-                navbarCollapse.addEventListener("hide.bs.collapse", () => {
-                    navbarBrand.style.display = "block"; // Mostrar el logo
-                });
-
-                // Activar el dropdown al pasar el cursor sobre él
-                dropdown.addEventListener("mouseenter", () => {
-                    this.querySelector(".dropdown-menu").classList.add("show");
-                    this.classList.add("show");
-                });
-
-                // Desactivar el dropdown al retirar el cursor
-                dropdown.addEventListener("mouseleave", () => {
-                    this.querySelector(".dropdown-menu").classList.remove("show");
-                    this.classList.remove("show");
+                navbarCollapse.addEventListener('hide.bs.collapse', () => {
+                    navbarBrand.style.display = 'block'; // Mostrar el logo
                 });
             });
         </script>

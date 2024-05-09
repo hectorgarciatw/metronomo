@@ -149,7 +149,7 @@ body {
 /* Fin circulos de los beats*/
 
 /* Estilo de la pelotita del input range */
-input[type="range"]::-webkit-slider-thumb {
+input[type='range']::-webkit-slider-thumb {
     background-color: #202529;
     border-radius: 50%;
 }
@@ -314,12 +314,12 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 /* Cambiar el color de la pelotita del slider a negro */
-.volume-slider input[type="range"]::-webkit-slider-thumb {
+.volume-slider input[type='range']::-webkit-slider-thumb {
     background-color: black !important;
 }
 
 /* Cambiar el color de la pista deslizante del slider a rojo */
-.volume-slider input[type="range"]::-webkit-slider-runnable-track {
+.volume-slider input[type='range']::-webkit-slider-runnable-track {
     background-color: red;
 }
 
@@ -388,7 +388,7 @@ input[type="range"]::-webkit-slider-thumb {
     background-color: #ffffff;
 }
 
-.dark-mode input[type="range"]::-webkit-slider-thumb {
+.dark-mode input[type='range']::-webkit-slider-thumb {
     background-color: #ff3a27;
 }
 
@@ -444,10 +444,16 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .footer::before {
-    content: "";
+    content: '';
     position: absolute;
     bottom: -20px;
     right: 50%;
     border-top: 20px solid #333;
     border-right: 20px solid transparent;
+}
+
+.dropdown-item.active,
+.dropdown-item:active {
+    color: #000;
+    background-color: #ededed;
 }

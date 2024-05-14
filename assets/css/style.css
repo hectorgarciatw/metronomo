@@ -457,3 +457,44 @@ input[type='range']::-webkit-slider-thumb {
     color: #000;
     background-color: #ededed;
 }
+
+/* Estilo para los botones */
+.btn.btn-outline-secondary {
+    border-radius: 0;
+}
+
+/* Estilo para el contenedor de los botones */
+.input-group-btn {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilo para dispositivos móviles */
+@media (max-width: 576px) {
+    .input-group-btn {
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 5px; /* Ajusta el margen superior para separar los botones */
+    }
+}
+
+@media (max-width: 576px) {
+    /* Estilo para el contenedor principal en dispositivos móviles */
+    .input-group {
+        border-radius: 20px;
+    }
+
+    /* Estilo para el input en dispositivos móviles */
+    #timeInput {
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
+
+    /* Estilo para los botones en dispositivos móviles */
+    .input-group-btn .btn {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+}

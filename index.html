@@ -129,12 +129,26 @@
                                             <div class="countdown form-check form-switch d-flex align-items-center">
                                                 <input id="stopwatchCheck" class="form-check-input me-3" type="checkbox" id="flexSwitchCheckDefault" />
                                                 <label class="form-check-label me-3" for="flexSwitchCheckDefault">Temporizador</label>
-                                                <input type="text" id="timeInput" class="form-control text-center" value="1:00" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" />
+                                                <div class="input-group">
+                                                    <input
+                                                        type="text"
+                                                        id="timeInput"
+                                                        class="form-control text-center"
+                                                        value="1:00"
+                                                        aria-label="Sizing example input"
+                                                        aria-describedby="inputGroup-sizing-sm"
+                                                        style="height: auto; padding: 0; margin: 0"
+                                                    />
+                                                    <div class="input-group-btn" style="height: auto">
+                                                        <button class="btn btn-outline-secondary btn-sm" type="button" id="subtractMinute" style="height: 25px; min-width: 25px"><i class="bx bx-minus" style="font-size: 12px"></i></button>
+                                                        <button class="btn btn-outline-secondary btn-sm" type="button" id="addMinute" style="height: 25px; min-width: 25px"><i class="bx bx-plus" style="font-size: 12px"></i></button>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <div id="firstBeat" class="firstBeat form-check form-switch d-flex align-items-center">
                                                 <input id="firstBeatToogle" class="form-check-input me-3" type="checkbox" id="flexSwitchCheckDefault" />
-                                                <label class="form-check-label me-3" for="flexSwitchCheckDefault">Marcar el primer Beat</label>
+                                                <label class="form-check-label me-3" for="flexSwitchCheckDefault">Marcar primer Beat</label>
                                             </div>
 
                                             <div class="volumeToogle form-check form-switch">

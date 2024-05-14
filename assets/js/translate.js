@@ -26,7 +26,7 @@ const spanishTexts = {
     implementedBy: 'Implementado por ☕️ Héctor García',
     subdivisions: 'Subdivisiones',
     audioClick: 'Audio del click',
-    timer: 'Temporizador',
+    timer: 'Tiempo',
     firstBeat: 'Marca el primer beat',
     aboutHeader: 'Acerca',
     beats: 'Latidos',

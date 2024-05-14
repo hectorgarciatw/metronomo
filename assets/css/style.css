@@ -490,6 +490,7 @@ input[type='range']::-webkit-slider-thumb {
         border-bottom-left-radius: 20px;
         border-top-right-radius: 20px;
         border-bottom-right-radius: 20px;
+        margin-right: 15px !important;
     }
 
     /* Estilo para los botones en dispositivos móviles */
